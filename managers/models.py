@@ -13,7 +13,6 @@ class Manager(models.Model):
         return self.content
     
 
-
 class Garage(models.Model):
     fullName = models.CharField(max_length=50)
     desciption = models.CharField(max_length=200)
@@ -35,6 +34,7 @@ class Trip(models.Model):
 
 class Seat(models.Model):
     number_chair = models.CharField(max_length=20)
+    status = models.CharField(max_length=50, default=0)
     trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
 
     def __unicode__(self):

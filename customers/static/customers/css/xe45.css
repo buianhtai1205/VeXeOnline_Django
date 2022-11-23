@@ -1,0 +1,97 @@
+div#xe45cho {
+	position: relative;
+	border: 3px solid #4F679B;
+	background: white;
+	width: 310px;
+	height: 680px;
+	border-radius: 20px;
+	float: left;
+	clear: right;
+	left: 0px;
+}
+
+div#xe45cho .ghe {
+	position: absolute;
+	width: 45px;
+	height: 45px;
+}
+
+div#xe45cho .cot0 {
+	left: 20px;
+}
+
+div#xe45cho .cot1 {
+	left: 80px;
+}
+
+div#xe45cho .cot2 {
+	left: 180px;
+}
+
+div#xe45cho .cot3 {
+	left: 240px;
+}
+
+div#xe45cho .hang0 {
+	top: 120px;
+}
+
+div#xe45cho .hang1 {
+	top: 170px;
+}
+
+div#xe45cho .hang2 {
+	top: 220px;
+}
+
+div#xe45cho .hang3 {
+	top: 270px;
+}
+
+div#xe45cho .hang4 {
+	top: 320px;
+}
+
+div#xe45cho .hang5 {
+	top: 370px;
+}
+
+div#xe45cho .hang6 {
+	top: 420px;
+}
+
+div#xe45cho .hang7 {
+	top: 470px;
+}
+
+div#xe45cho .hang8 {
+	top: 520px;
+}
+
+div#xe45cho .hang9 {
+	top: 570px;
+}
+
+div#xe45cho .hang10 {
+	top: 620px;
+}
+
+div#xe45cho .cot1-0 {
+	left: 20px;
+}
+
+div#xe45cho .cot1-1 {
+	left: 75px;
+}
+
+div#xe45cho .cot1-2 {
+	left: 130px;
+}
+
+div#xe45cho .cot1-3 {
+	left: 185px;
+}
+
+div#xe45cho .cot1-4 {
+	left: 240px;
+}
