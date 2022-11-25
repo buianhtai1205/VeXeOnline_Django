@@ -19,14 +19,21 @@ class Garage(models.Model):
 
     def __unicode__(self):
         return self.content
-    
+
+class Schedule(models.Model):
+    musty = models.CharField(max_length=100)
+    status = models.IntegerField
+    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
+
+    def __unicode__(self):
+        return self.content
 
 class Trip(models.Model):
     departure = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     departure_time = models.TimeField()
     price = models.IntegerField()
-    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Manafacturer")
+    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
 
     def __unicode__(self):
         return self.content
