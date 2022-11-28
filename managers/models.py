@@ -15,7 +15,7 @@ class Manager(models.Model):
     phoneNumber = models.CharField(max_length=15)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=200)
-    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage", default=None)
+    garage = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage", default=None)
 
     def __unicode__(self):
         return self.content
@@ -23,7 +23,7 @@ class Manager(models.Model):
 class Schedule(models.Model):
     musty = models.CharField(max_length=100)
     status = models.IntegerField
-    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
+    garage = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
 
     def __unicode__(self):
         return self.content
@@ -31,10 +31,10 @@ class Schedule(models.Model):
 class Trip(models.Model):
     departure = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
-    departure_time = models.TimeField()
+    departure_time = models.DateTimeField()
     price = models.IntegerField()
     num_seat = models.IntegerField(default=0)
-    garage_id = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
+    garage = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
 
     def __unicode__(self):
         return self.content
@@ -43,17 +43,17 @@ class Trip(models.Model):
 class Seat(models.Model):
     number_chair = models.CharField(max_length=20)
     status = models.CharField(max_length=50, default=0)
-    trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
 
     def __unicode__(self):
         return self.content
     
 
 class Ticket(models.Model):
-    trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
-    seat_id = models.ForeignKey(Seat, on_delete=models.CASCADE, verbose_name="Seat")
-    schedule_id = models.ForeignKey(Schedule, on_delete=models.CASCADE, verbose_name="Schedule", null=True)
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name="Customer")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
+    seat = models.ForeignKey(Seat, on_delete=models.CASCADE, verbose_name="Seat")
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, verbose_name="Schedule", null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name="Customer")
 
     class Meta:
         constraints = [
