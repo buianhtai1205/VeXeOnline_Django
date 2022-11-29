@@ -5,7 +5,7 @@ from customers.models import Customer
 
 class Garage(models.Model):
     fullName = models.CharField(max_length=50)
-    desciption = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
     deleted = models.IntegerField(default=0)
 
     def __unicode__(self):

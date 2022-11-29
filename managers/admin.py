@@ -28,12 +28,12 @@ class GarageAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'fullName',
-        'desciption'
+        'description'
         )
     list_display_links = (
         'id',
         'fullName',
-        'desciption'
+        'description'
         )
     list_per_page = 5
     sortable_by = ('id')
