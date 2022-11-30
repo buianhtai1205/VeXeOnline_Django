@@ -52,20 +52,20 @@
 			<div class="row tool-search">
 				<form action="{% url 'customers:listCoach' %}" method="post" style="display: flex;">
 					{% csrf_token %}
-					<select name="departure" class="form-select col-3 custom_flex" aria-label="Default select example">
+					<select name="departure" class="form-select col-3 custom_flex" aria-label="Default select example" required>
 						<option selected>Chọn nơi xuất phát</option>
 						{% for item in departure %}
 						<option value="{{ item.departure }}">{{ item.departure }}</option>
 						{% endfor %}
 					</select>
-					<select name="destination" class="col-3 form-select custom_flex" aria-label="Default select example">
+					<select name="destination" class="col-3 form-select custom_flex" aria-label="Default select example" required>
 						<option selected>Chọn điểm đến</option>
 						{% for item in destination %}
 						<option value="{{ item.destination }}">{{ item.destination }}</option>
 						{% endfor %}
 					</select>
 					<div class="col-3 custom_flex">
-						<input name="departure_time" class="form-control" type="date">
+						<input name="departure_time" class="form-control" type="date" required>
 					</div>
 					<div class="col-3">
 						<button class="btn btn-danger">Tìm chuyến</button>

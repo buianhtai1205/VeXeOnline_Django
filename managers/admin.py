@@ -2,6 +2,8 @@ from django.contrib import admin
 from managers.models import Manager
 from managers.models import Garage
 from managers.models import Trip
+from managers.models import Seat
+from managers.models import Schedule
 
 # Register your models here.
 class ManagerAdmin(admin.ModelAdmin):
@@ -42,3 +44,5 @@ admin.site.register(Garage, GarageAdmin)
 
 # Test manager
 admin.site.register(Trip)
+admin.site.register(Seat)
+admin.site.register(Schedule)

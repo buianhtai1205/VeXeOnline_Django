@@ -23,7 +23,7 @@ class Manager(models.Model):
 
 class Schedule(models.Model):
     musty = models.CharField(max_length=100)
-    status = models.IntegerField
+    status = models.IntegerField(default=0)
     garage = models.ForeignKey(Garage, on_delete=models.CASCADE, verbose_name="Garage")
 
     def __unicode__(self):
