@@ -395,7 +395,7 @@
                                                     <div class="div">
                                                         <div class="div__content" style="font-size: 16px">
                                                             <h3 style="font-size: 20px">{{ item.garage.fullName }}</h3>
-                                                            <!-- 	<i class="fa fa-star">3.9</i> -->
+                                                            <!--     <i class="fa fa-star">3.9</i> -->
                                                             <p class="content__1">{{ item.price }}.000 VNĐ</p>
                                                         </div>
                                                         <p>Giường nằm {{ item.num_seat }} chỗ</p>
@@ -839,11 +839,10 @@
 
                                                                                 <div>
                                                                                     <div class="form-group ">
-                                                                                        <input type="text"
-                                                                                            class="form-control top"
-                                                                                            id="inputName"
-                                                                                            placeholder="First and Last name "
-                                                                                            name="nameUser" value="">
+                                                                                        <input type="text" class="form-control top"
+                                                                                            id="inputName" placeholder="First and Last name "
+                                                                                            name="nameUser" value="" required>
+                                                                                       
                                                                                         <div>
                                                                                             <p id="error1"></p>
                                                                                         </div>
@@ -852,18 +851,19 @@
                                                                                     <div class="form-group ">
                                                                                         <input type="text"
                                                                                             class="form-control top inputPhone1"
-                                                                                            id="inputPhone"
-                                                                                            placeholder="Number phone "
-                                                                                            name="phoneUser" value="">
+                                                                                            id="inputPhone" placeholder="Number phone "
+                                                                                            name="phoneUser" value="" required>
+                                                                                           >
                                                                                         <p id="error2"></p>
                                                                                     </div>
 
                                                                                     <div class="form-group ">
+                                                                                       
                                                                                         <input type="text"
                                                                                             class="form-control top"
                                                                                             id="inputEmail"
                                                                                             placeholder="Email (abc@gmail.com)"
-                                                                                            name="emailUser" value="">
+                                                                                            name="emailUser" value="" required>
                                                                                         <div>
                                                                                             <p id="error3"></p>
                                                                                         </div>
@@ -920,7 +920,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

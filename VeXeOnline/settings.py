@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = 'static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),)
 
 
 # Quick-start development settings - unsuitable for production
@@ -116,6 +121,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+# gửi emailUser
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'voduytao3@gmail.com'
+EMAIL_HOST_PASSWORD = 'huujnitaugdvmoxv'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
