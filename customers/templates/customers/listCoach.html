@@ -33,6 +33,17 @@
     <link rel="stylesheet" href="{% static 'customers/css/timve.css' %}">
     <link rel="stylesheet" href="{% static 'customers/css/datvexe.css' %}">
     {% comment %} <link rel="stylesheet" href="{% static 'customers/css/listCoachSearch.css' %}">  {% endcomment %}
+    <style>
+        .invalid {
+          border-color: red !important;
+        }
+        #error {
+          color: red
+        }
+        #error2 {
+          color: red
+        }
+        </style>
 </head>
 
 <body>
@@ -383,8 +394,9 @@
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="all" role="tabpanel"
                                 aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
-                                    <form action="#"
+                                    <form action="{% url 'customers:datve' %}"
                                         method="POST">
+                                        {% csrf_token %} 
                                             <div class="vexe">
                                                 <div class="card__top" style="font-size: small">
                                                     <div class="card__right">
@@ -415,8 +427,8 @@
                                                                 onclick="chonXe('#scroll1<%=1%>',800,'chuyendi',1,1)"
                                                                 data-target="#collapseChonChuyen" aria-expanded="false"
                                                                 aria-controls="collapseChonChuyen" name="idChuyenXe"
-                                                                value="2" type="button">Chọn chuyến</button>
-                                                            <input class="form-check-input" type="hidden" value="2"
+                                                                value="1" type="button">Chọn chuyến</button>
+                                                            <input class="form-check-input" type="hidden" value="1"
                                                                 name="inputIdChuyenXe" id="inputIdChuyenXe">
                                                         </div>
                                                     </div>
@@ -693,8 +705,8 @@
                                                                                 
                                                                         
                                                                         %> -->
-                                                                            <!-- <input class="form-check-input inputGheDangChon" type="text"
-                                                                                value="1" name="gheDangChon" id="inputGheDangChon"> -->
+                                                                          <input class="form-check-input inputGheDangChon" type="text"
+                                                                                value="1" name="gheDangChon" id="inputGheDangChon">
                                                                     </div>
                                                                 </div>
                                                                 <div style="border-top: 1px solid;">
@@ -835,7 +847,7 @@
                                                                                     <div class="form-group ">
                                                                                         <input type="text" class="form-control top"
                                                                                             id="inputName" placeholder="First and Last name "
-                                                                                            name="nameUser" value="">
+                                                                                            name="nameUser" value="" required>
                                                                                         <div>
                                                                                             <p id="error1"></p>
                                                                                         </div>
@@ -845,15 +857,15 @@
                                                                                         <input type="text"
                                                                                             class="form-control top inputPhone1"
                                                                                             id="inputPhone" placeholder="Number phone "
-                                                                                            name="phoneUser" value="">
+                                                                                            name="phoneUser" value="" required>
                                                                                         <p id="error2"></p>
                                                                                     </div>
     
                                                                                     <div class="form-group ">
-                                                                                        <input type="text" class="form-control top"
+                                                                                        <input type="email" class="form-control top"
                                                                                             id="inputEmail"
                                                                                             placeholder="Email (abc@gmail.com)"
-                                                                                            name="emailUser" value="">
+                                                                                            name="emailUser" value="" required>
                                                                                         <div>
                                                                                             <p id="error3"></p>
                                                                                         </div>
