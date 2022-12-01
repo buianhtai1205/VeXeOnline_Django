@@ -32,18 +32,6 @@
     <link rel="stylesheet" href="{% static 'customers/css/ve16.css' %}">
     <link rel="stylesheet" href="{% static 'customers/css/timve.css' %}">
     <link rel="stylesheet" href="{% static 'customers/css/datvexe.css' %}">
-    {% comment %} <link rel="stylesheet" href="{% static 'customers/css/listCoachSearch.css' %}">  {% endcomment %}
-    <style>
-        .invalid {
-          border-color: red !important;
-        }
-        #error {
-          color: red
-        }
-        #error2 {
-          color: red
-        }
-        </style>
     {% comment %}
     <link rel="stylesheet" href="{% static 'customers/css/listCoachSearch.css' %}"> {% endcomment %}
 </head>
@@ -394,25 +382,6 @@
                             </ul>
 
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel"
-                                aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
-                                    <form action="{% url 'customers:datve' %}"
-                                        method="POST">
-                                        {% csrf_token %} 
-                                            <div class="vexe">
-                                                <div class="card__top" style="font-size: small">
-                                                    <div class="card__right">
-                                                        <img src="{% static 'customers/images/xe2.jpg' %}" alt="">
-    
-                                                        <div class="div">
-                                                            <div class="div__content" style="font-size: 16px">
-                                                                <h3 style="font-size: 20px">Trang Hòa</h3>
-                                                                <!-- 	<i class="fa fa-star">3.9</i> -->
-                                                                <p class="content__1">300.000đ</p>
-                                                            </div>
-                                                            <p>Giường nằm 44 chỗ</p>
-                                                            <i class="fa fa-map-pin">6h30P</i><br> <i
-                                                                class="fa fa-map-marker-alt">18h30P</i>
                                 {% for item in list_trip %}
                                 <form action="#" method="POST" style="margin-bottom: 16px!important;">
                                     {% csrf_token %}
@@ -426,7 +395,7 @@
                                                     <div class="div">
                                                         <div class="div__content" style="font-size: 16px">
                                                             <h3 style="font-size: 20px">{{ item.garage.fullName }}</h3>
-                                                            <!-- 	<i class="fa fa-star">3.9</i> -->
+                                                            <!--     <i class="fa fa-star">3.9</i> -->
                                                             <p class="content__1">{{ item.price }}.000 VNĐ</p>
                                                         </div>
                                                         <p>Giường nằm {{ item.num_seat }} chỗ</p>
@@ -434,23 +403,6 @@
                                                         <br> 
                                                         <i class="fa fa-map-marker-alt">18h30P</i>
                                                     </div>
-                                                    <div class="collasp">
-                                                        <div class="card__link">
-                                                            <a data-toggle="collapse" href="#collapseExample"
-                                                                role="button" aria-expanded="false"
-                                                                aria-controls="collapseExample"> Thông tin chi tiết <i
-                                                                class="fa fa-angle-down"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="button">
-                                                            <button data-toggle="collapse"
-                                                                onclick="chonXe('#scroll1<%=1%>',800,'chuyendi',1,1)"
-                                                                data-target="#collapseChonChuyen" aria-expanded="false"
-                                                                aria-controls="collapseChonChuyen" name="idChuyenXe"
-                                                                value="1" type="button">Chọn chuyến</button>
-                                                            <input class="form-check-input" type="hidden" value="1"
-                                                                name="inputIdChuyenXe" id="inputIdChuyenXe">
-                                                        </div>
 
                                                 </div>
                                                 <div class="collasp">
@@ -1043,11 +995,7 @@
                                                                                         <input type="text" class="form-control top"
                                                                                             id="inputName" placeholder="First and Last name "
                                                                                             name="nameUser" value="" required>
-                                                                                        <input type="text"
-                                                                                            class="form-control top"
-                                                                                            id="inputName"
-                                                                                            placeholder="First and Last name "
-                                                                                            name="nameUser" value="">
+                                                                                       
                                                                                         <div>
                                                                                             <p id="error1"></p>
                                                                                         </div>
@@ -1063,7 +1011,7 @@
                                                                                     </div>
 
                                                                                     <div class="form-group ">
-                                                                                        <input type="email" class="form-control top"
+                                                                                       
                                                                                         <input type="text"
                                                                                             class="form-control top"
                                                                                             id="inputEmail"
@@ -1125,7 +1073,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

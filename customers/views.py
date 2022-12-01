@@ -68,8 +68,8 @@ def checkCustomer(request):
     return HttpResponse("Sai method")
     
 
-def listCoach(request):
-    return render(request, 'customers/listCoach.html')
+# def listCoach(request):
+#     return render(request, 'customers/listCoach.html')
 
 @csrf_exempt
 def datve(request):
@@ -126,28 +126,28 @@ def _pw(length=6):
     return s
 
 def getTripByTicket(request,phoneNumber):
-    idTrip = "SELECT 1 as id, managers_ticket.trip_id_id,managers_ticket.seat_id_id from managers_ticket join customers_customer on customers_customer.id = managers_ticket.customer_id_id where phoneNumber = " + phoneNumber;
+    idTrip = "SELECT 1 as id, managers_ticket.trip_id,managers_ticket.seat_id from managers_ticket join customers_customer on customers_customer.id = managers_ticket.customer_id where phoneNumber = " + phoneNumber;
     _Trip = Ticket.objects.raw(idTrip)
     # getTrip
     for data in _Trip:
-        trip_id_id=data.trip_id_id
-        seat_id_id=data.seat_id_id
-    trip = "SELECT * from managers_trip where managers_trip.id =" + str(trip_id_id);
+        trip_id=data.trip_id
+        seat_id=data.seat_id
+    trip = "SELECT * from managers_trip where managers_trip.id =" + str(trip_id);
     _getTrip = Trip.objects.raw(trip)
     for data in _getTrip:
         departure= data.departure
         destination=data.destination
         departure_time=data.departure_time
         price=data.price
-        garage_id=data.garage_id_id
+        garage_id=data.garage_id
         # getGarage 
         idGarage = "SELECT * FROM managers_garage WHERE id = " + str(garage_id);
         _Garage = Garage.objects.raw(idGarage)
         for data in _Garage:
             fullnameGarage=data.fullName
-            description=data.desciption
+            description=data.description
         # getSeat 
-        seat = "SELECT * FROM Seat WHERE id = " + str(seat_id_id);
+        seat = "SELECT * FROM Seat WHERE id = " + str(seat_id);
         _Seat = Seat.objects.raw(idGarage)
         for data in _Seat:
             number_chair=data.number_chair
