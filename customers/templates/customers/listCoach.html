@@ -34,6 +34,19 @@
     <link rel="stylesheet" href="{% static 'customers/css/datvexe.css' %}">
     {% comment %}
     <link rel="stylesheet" href="{% static 'customers/css/listCoachSearch.css' %}"> {% endcomment %}
+    <style>
+        .invalid {
+            border-color: red !important;
+        }
+        
+        #error {
+            color: red
+        }
+        
+        #error2 {
+            color: red
+        }
+    </style>
 </head>
 
 <body>
@@ -383,7 +396,7 @@
 
                             <div class="tab-content" id="pills-tabContent">
                                 {% for item in list_trip %}
-                                <form action="#" method="POST" style="margin-bottom: 16px!important;">
+                                <form action="/datve" method="POST" style="margin-bottom: 16px!important;">
                                     {% csrf_token %}
                                     <div class="tab-pane fade show active" id="all" role="tabpanel"
                                         aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
@@ -418,7 +431,7 @@
                                                             data-target="#collapseChonChuyen" aria-expanded="false"
                                                             aria-controls="collapseChonChuyen" name="idChuyenXe"
                                                             value="2" type="button">Chọn chuyến</button>
-                                                        <input class="form-check-input" type="hidden" value="2"
+                                                        <input class="form-check-input" type="hidden" value="1"
                                                             name="inputIdChuyenXe" id="inputIdChuyenXe">
                                                     </div>
                                                 </div>
@@ -588,7 +601,6 @@
                                                                                             <p>17:50 • Văn Phòng Đắk
                                                                                                 Lắk</p>
                                                                                         </div>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -642,163 +654,7 @@
                                                         <div class="tab-content" id="pills-tabContent">
                                                             <div class="tab-pane fade show active" id="img2"
                                                                 role="tabpanel" aria-labelledby="pills-img-tab2">
-                                                                <div>
-                                                                    <img id="img-16" style="float: left; clear: right;"
-                                                                        alt="Chu Thich"
-                                                                        src="{% static 'customers/images/ghes.png' %}">
-                                                                    <div id="xe16cho" style="position: relative;">
-                                                                        <input type="hidden" value="" id="idChuyen" />
-                                                                        <img alt="dauxe"
-                                                                            src="{% static 'customers/images/p.png' %}"
-                                                                            width="260px" height="150px">
-                                                                        <!-- <%
-                                                                            
-                                                                            for (int i = 0; i < 15; i++) {
-                                                                                int hang = 0;
-                                                                                int cot = 0;
-        
-                                                                                switch (i) {
-                                                                                    case 0 :
-                                                                                    case 1 :
-                                                                                hang = 0;
-                                                                                break;
-                                                                                    case 2 :
-                                                                                    case 3 :
-                                                                                    case 4 :
-                                                                                hang = 1;
-                                                                                break;
-                                                                                    case 5 :
-                                                                                    case 6 :
-                                                                                    case 7 :
-                                                                                hang = 2;
-                                                                                break;
-                                                                                    case 8 :
-                                                                                    case 9 :
-                                                                                    case 10 :
-                                                                                hang = 3;
-                                                                                break;
-                                                                                    case 11 :
-                                                                                    case 12 :
-                                                                                    case 13 :
-                                                                                    case 14 :
-                                                                                hang = 4;
-                                                                                break;
-                                                                                    default :
-                                                                                break;
-                                                                                }
-                                                                                switch (i) {
-                                                                                    case 2 :
-                                                                                    case 5 :
-                                                                                    case 8 :
-                                                                                    case 11 :
-        
-                                                                                cot = 0;
-                                                                                break;
-                                                                                    case 0 :
-                                                                                    case 3 :
-                                                                                    case 6 :
-                                                                                    case 9 :
-                                                                                    case 12 :
-                                                                                cot = 1;
-                                                                                break;
-                                                                                    case 1 :
-                                                                                    case 4 :
-                                                                                    case 7 :
-                                                                                    case 10 :
-                                                                                    case 13 :
-                                                                                cot = 2;
-                                                                                break;
-                                                                                    default :
-                                                                                cot = 3;
-                                                                                break;
-                                                                                }
-                                                                                
-                                                                                /* if (danhSachghe.get(i).getTrangThai() == Ghe.DA_DAT) */ {
-                                                                            %>
-                                                                            
-                                                                            <img alt="ghe<%=i%>"
-                                                                                src="{% static 'customers./assets/user/images/ghe3.png' %}" id="<%=i%>"
-                                                                                class="ghe hang<%=hang%> cot<%=cot%> a"
-                                                                                onclick="choose1(<%=i%>)" name="<%=i%> inputGheDaDat">
-        
-                                                                                    
-        
-                                                                            <%
-                                                                            }
-                                                                            /* else if (danhSachghe.get(i).getTrangThai() == Ghe.CHUA_DAT)  */ {
-                                                                            %>
-        
-                                                                            <img alt="ghe<%=i%>"
-                                                                                src="{% static 'customers./assets/user/images/ghe1.png' %}" id="<%=i%>"
-                                                                                class="ghe chuadat hang<%=hang%> cot<%=cot%> b"
-                                                                                onclick="choose1(<%=i%>)" name="<%=i%> inputGheChuaDat">
-                                                                                    
-                                                                            <%
-                                                                            }
-                                                                            /* else */ {
-                                                                            %>
-        
-                                                                            <img alt="ghe<%=i%>"
-                                                                                src="{% static 'customers./assets/user/images/ghe2.png' %}" id="<%=i%>"
-                                                                                class="ghe danggiu hang<%=hang%> cot<%=cot%> c"
-                                                                                onclick="choose1(<%=i%>)" name="<%=i%> inputGheDangChon">
-        
-                                                                                    
-                                                                            <%
-                                                                            }
-                                                                            
-                                                                            /* if (danhSachghe.get(i).getTrangThai() == Ghe.DA_DAT) */ {
-                                                                        %>
-                                                                        
-                                                                        <img alt="ghe<%=i%>"
-                                                                            src="{% static 'customers./assets/user/images/ghe3.png' %}" id="<%=i%>"
-                                                                            class="ghe hang<%=hang%> cot<%=cot%> a"
-                                                                            onclick="choose1(<%=i%>)" name="<%=i%> inputGheDaDat">
-    
-                                                                                
-    
-                                                                        <%
-                                                                        }
-                                                                        /* else if (danhSachghe.get(i).getTrangThai() == Ghe.CHUA_DAT)  */ {
-                                                                        %>
-    
-                                                                        <img alt="ghe<%=i%>"
-                                                                            src="{% static 'customers./assets/user/images/ghe1.png' %}" id="<%=i%>"
-                                                                            class="ghe chuadat hang<%=hang%> cot<%=cot%> b"
-                                                                            onclick="choose1(<%=i%>)" name="<%=i%> inputGheChuaDat">
-                                                                                
-                                                                        <%
-                                                                        }
-                                                                        /* else */ {
-                                                                        %>
-    
-                                                                        <img alt="ghe<%=i%>"
-                                                                            src="{% static 'customers./assets/user/images/ghe2.png' %}" id="<%=i%>"
-                                                                            class="ghe danggiu hang<%=hang%> cot<%=cot%> c"
-                                                                            onclick="choose1(<%=i%>)" name="<%=i%> inputGheDangChon">
-    
-                                                                                
-                                                                        <%
-                                                                        }
-                                                                        
-                                                                        
-                                                                        }
-                                                                                
-                                                                        
-                                                                        %> -->
-                                                                          <input class="form-check-input inputGheDangChon" type="text"
-                                                                                value="1" name="gheDangChon" id="inputGheDangChon">
-                                                                            
-                                                                            }
-                                                                                    
-                                                                            
-                                                                            %> -->
-                                                                        <!-- <input class="form-check-input inputGheDangChon" type="text"
-                                                                                    value="1" name="gheDangChon" id="inputGheDangChon"> -->
-                                                                    </div>
-                                                                </div>
                                                                 <div style="border-top: 1px solid;">
-
                                                                     <div class="line"
                                                                         style="display: block; border-bottom: 10px;">
                                                                     </div>
@@ -1003,15 +859,15 @@
 
                                                                                     <div class="form-group ">
                                                                                         <input type="text"
-                                                                                            class="form-control top inputPhone1"
+                                                                                            class="form-control top inputPhone"
                                                                                             id="inputPhone" placeholder="Number phone "
                                                                                             name="phoneUser" value="" required>
-                                                                                           >
-                                                                                        <p id="error2"></p>
+                                                                                            <div>
+                                                                                                <p id="error1"></p>
+                                                                                            </div>
                                                                                     </div>
 
-                                                                                    <div class="form-group ">
-                                                                                       
+                                                                                    <div class="form-group ">                                                                                    
                                                                                         <input type="text"
                                                                                             class="form-control top"
                                                                                             id="inputEmail"
@@ -1036,14 +892,6 @@
                                                                                             Tục</b>, bạn đồng ý với
                                                                                         Chính sách bảo mật thông tin
                                                                                         và Quy chế</p>
-                                                                                    <!-- <div class="form-group form-check content">
-                                                                                        <input type="checkbox" class="form-check-input"
-                                                                                            id="exampleCheck1" name="rememberMe" value="Y">
-                                                                                        <label class="form-check-label" for="exampleCheck1">Remember</label>
-                                                                                        <a class="forgot" href="login"
-                                                                                            style="text-decoration: none;">Forgot password</a>
-                                                                                    </div>
-                                                                                    <button class="button3" type="submit">Login</button> -->
                                                                                 </div>
                                                                             </div>
                                                                             <div style="border-top: 1px solid;">
@@ -1109,39 +957,6 @@
 
 
 
-    <!-- SLICK -->
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
-        $('.multiple-items').slick({
-            infinite: true,
-            arrows: false,
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 2000,
-        });
-    </script> 
-
-    <script>
-        $('.slider-for').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: '.slider-nav'
-        });
-        $('.slider-nav').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            asNavFor: '.slider-for',
-            dots: true,
-            centerMode: true,
-            focusOnSelect: true
-        })
-    </script> -->
-
-    <!-- tinhtien -->
     <script src="{% static 'customers/js/tinhtien.js' %}"></script>
     <script type="text/javascript">
         var onClick = (n) => {

@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 import random 
 import string
 from datetime import datetime
-
+import phonenumbers
 # Create your views here.
 def index(request):
    return render(request, 'customers/index.html')
@@ -42,27 +42,54 @@ def userInfo(request):
 @csrf_exempt
 def checkCustomer(request):
     if request.method == 'POST':
+            login_data = request.POST.dict()
+            numberPhone = login_data['numberPhone']
+            password = login_data['password']
+            num_rows = Customer.objects.filter(phoneNumber=numberPhone, password=password).count()
+            nameUser=None
+            emailUser = None
+            sql = "SELECT * FROM customers_customer where phoneNumber =" + numberPhone
+            User = Customer.objects.raw(sql)
+            for data in User:
+                nameUser=data.fullName
+                emailUser=data.email
+            if num_rows > 0:
+                request.session['numberPhone'] = numberPhone
+                request.session['fullname'] = nameUser
+                request.session['email'] = emailUser
+                messages = "Đăng nhập thành công!"
+                content = {'numberPhone': numberPhone, 'messages': messages}
+            
+                return redirect(reverse('customers:userInfo', kwargs = {}))
+            else:
+                messages = "Số điện thoại hoặc mật khẩu không đúng!"
+                content = {'messages': messages}
+                return render(request, 'customers/login_view.html',content)
+    return HttpResponse("Sai method")
+
+@csrf_exempt
+def forgotPassword(request):
+    if request.method == 'POST':
         login_data = request.POST.dict()
-        numberPhone = login_data['numberPhone']
-        password = login_data['password']
-        num_rows = Customer.objects.filter(phoneNumber=numberPhone, password=password).count()
-        nameUser=None
-        emailUser = None
-        sql = "SELECT * FROM customers_customer where phoneNumber =" + numberPhone
-        User = Customer.objects.raw(sql)
-        for data in User:
-            nameUser=data.fullName
-            emailUser=data.email
+        numberPhone = login_data['numberPhoneForgotPassword']
+        num_rows = Customer.objects.filter(phoneNumber=numberPhone).count()
         if num_rows > 0:
-            request.session['numberPhone'] = numberPhone
-            request.session['fullname'] = nameUser
-            request.session['email'] = emailUser
-            messages = "Đăng nhập thành công!"
+            _password = _pw(8)
+            updatePassword = "UPDATE customers_customer  SET password = "+ _password  + "WHERE phoneNumber = " + numberPhone
+            Customer.objects.raw(updatePassword)
+            sql = "SELECT * FROM customers_customer where phoneNumber =" + numberPhone
+            User = Customer.objects.raw(sql)
+            for data in User:
+                nameUser=data.fullName
+                emailUser=data.email
+                passwordNew = data.password
+            messages = "Đã đổi mật khẩu thành công!"
             content = {'numberPhone': numberPhone, 'messages': messages}
-            getTripByTicket(request,numberPhone)
-            return redirect(reverse('customers:userInfo', kwargs = {}))
+            data = "Xin chào: " + nameUser+ " chúng tôi vừa cập nhật lại mật khẩu cho bạn, mật khẩu mới là: " + passwordNew
+            send_mail('Welcome!', data, "PLC", [emailUser], fail_silently=False)
+            return render(request, 'customers/success.html')
         else:
-            messages = "Số điện thoại hoặc mật khẩu không đúng!"
+            messages = "Số điện thoại không đúng!"
             content = {'messages': messages}
             return render(request, 'customers/login_view.html',content)
     return HttpResponse("Sai method")
@@ -96,9 +123,9 @@ def datve(request):
     for data in User:
         idUser=data.id
 
-    _idChuyen = Trip.objects.get(id=idChuyen)
-    _idSeat = Seat.objects.get(id=idGhe)
-    _idCustomer= Customer.objects.get(id=idUser)
+    _idChuyen = idChuyen
+    _idSeat = idGhe
+    _idCustomer= idUser
 
     if(_idSeat != None):
         ticket = Ticket()
@@ -112,14 +139,13 @@ def datve(request):
             transaction.savepoint_rollback(sid)
     else:
             try:
-                # In worst case scenario, this might fail too
                 transaction.savepoint_commit(sid)
             except IntegrityError:
                 transaction.savepoint_rollback(sid)
     return render(request, 'customers/success.html')
   return HttpResponse("Sai method")
 
-def _pw(length=6):
+def _pw(length=8):
     s = ''
     for i in range(length):
         s += random.choice(string.digits)
