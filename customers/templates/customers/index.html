@@ -382,60 +382,6 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    <!-- owlCousel -->
-    <script src="{% static 'customers/lib/owlCarousel/dist/owl.carousel.min.js' %}"></script>
-
-    <script>
-      $(document).ready(function () {
-        $('.owl-carousel:not(".myStudent")').owlCarousel({
-          loop: true,
-          margin: 10,
-          nav: true,
-          autoWidth: true,
-          slideBy: 4,
-          dots: false,
-          stagePadding: 0,
-          mouseDrag: false,
-          responsive: {
-            0: {
-              items: 4,
-            },
-            1000: {
-              items: 4,
-            },
-          },
-        });
-      });
-      $(document).ready(function () {
-        $(".myStudent").owlCarousel({
-          loop: true,
-          margin: 10,
-          nav: true,
-          autoWidth: true,
-          slideBy: 6,
-          dots: false,
-          stagePadding: 0,
-          mouseDrag: false,
-          responsive: {
-            0: {
-              items: 1,
-            },
-            600: {
-              items: 3,
-            },
-            1199: {
-              items: 4,
-            },
-
-            1439: {
-              items: 5,
-            },
-          },
-        });
-      });
-    </script>
-    <!-- slick -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
     <script type="text/javascript">
       function validatePhoneNumber(input_str) {
@@ -446,7 +392,7 @@
 
       var phoneNumber = document.getElementById("phoneNumber");
       var password = document.getElementById("password");
-      {% comment %} var error2 = document.getElementById("error2"); {% endcomment %}
+
       phoneNumber.onblur = function () {
         if (!validatePhoneNumber(phoneNumber.value)) {
           phoneNumber.classList.add("invalid");
