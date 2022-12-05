@@ -64,7 +64,7 @@ def checkCustomer(request):
             else:
                 messages = "Số điện thoại hoặc mật khẩu không đúng!"
                 content = {'messages': messages}
-                return render(request, 'customers/login/login_view_notify.html',content)
+                return render(request, 'customers/login/login_view.html',content)
     return HttpResponse("Sai method")
 
 @csrf_exempt

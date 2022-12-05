@@ -48,6 +48,118 @@
             color: red
         }
     </style>
+
+    <script type="text/javascript">
+        const nextBtn = document.querySelectorAll(".btnNext");
+        const prevBtn = document.querySelectorAll(".btnPrevious");
+            var btnNext = (n,index=0) => {
+                   let id1 = index;
+                    let id2 = index + 1;
+                    let tabElement2 = document.querySelectorAll("#pills-tab" + n + " li a")[id2];
+                    var lastTab = new bootstrap.Tab(tabElement2);
+                    lastTab.show();
+                    console.log(n)
+    
+            }
+
+        var btnPrevious = (n,index=0) => {
+            let id = index;
+            let id2 = index - 1;
+            let tabElement = document.querySelectorAll("#pills-tab" + n +" li a")[id];
+            var lastTab = new bootstrap.Tab(tabElement);
+            lastTab.show();
+            console.log(n)
+        }
+
+        var goBack2 = (n) => {
+            var disabled2 = document.querySelector(`.nav-link_3`);
+            if (disabled2.classList.contains('disabled')) {
+                disabled2.classList.remove('disabled');
+            }
+
+        }
+        /* nextTab */
+     
+
+        nextBtn.forEach(function (item, index) {
+
+            item.addEventListener('click', function () {
+                let id1 = index;
+                let id2 = index + 1;
+                let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2];
+                var lastTab = new bootstrap.Tab(tabElement2);
+                lastTab.show();
+            });
+        });
+
+        prevBtn.forEach(function (item, index) {
+            item.addEventListener('click', function () {
+                let id = index;
+                let id2 = index - 1;
+                let tabElement = document.querySelectorAll("#pills-tab2 li a")[id];
+                var lastTab = new bootstrap.Tab(tabElement);
+                lastTab.show();
+            });
+        });
+
+        /* //check validatate */
+
+        var input1 = document.getElementById("inputName");
+        var input2 = document.getElementById("inputPhone");
+        var input3 = document.getElementById("inputEmail");
+
+        var error2 = document.getElementById("error2");
+        input1.onblur = function () {
+            if (input1.value.length == 0) {
+                input1.classList.add('invalid');
+                error1.innerHTML = 'Please enter a correct first name and last name.'
+            }
+        };
+
+        input1.onfocus = function () {
+            input1.classList.remove('invalid');
+            error1.innerHTML = "";
+        };
+
+        function validatePhoneNumber(input_str) {
+            var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+            return re.test(input_str);
+        }
+
+
+        input2.onblur = function () {
+            if (!validatePhoneNumber(input2.value)) {
+                input2.classList.add('invalid');
+                error2.innerHTML = 'Please enter a correct number phone.';
+                /* 				error2.innerText = 'Please enter a correct number phone.'; */
+                /* 				console.log(error2) */
+            }
+        };
+
+        input2.onfocus = function () {
+            if (this.classList.contains('invalid2')) {
+                this.classList.remove('invalid2');
+                error2.innerHTML = "";
+            }
+        };
+
+
+        input3.onblur = function () {
+            if (input3.value.length === 0) {
+                input3.classList.add('invalid');
+                error3.innerHTML = 'Please enter a correct email.'
+            }
+        };
+
+        input3.onfocus = function () {
+            if (this.classList.contains('invalid')) {
+                this.classList.remove('invalid');
+                error3.innerHTML = "";
+            }
+        };
+
+    </script>
 </head>
 
 <body>
@@ -395,9 +507,9 @@
                                 </li>
                             </ul>
 
-                            <div class="tab-content" id="pills-tabContent">
+                            <div class="{{ item.id }}" id="{{ item.id }}">
                                 {% for item in list_trip %}
-                                <form action="/datve" method="POST" style="margin-bottom: 16px!important;">
+                                <div>
                                     {% csrf_token %}
                                     <div class="tab-pane fade show active" id="all" role="tabpanel"
                                         aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
@@ -421,56 +533,56 @@
                                                 </div>
                                                 <div class="collasp">
                                                     <div class="card__link">
-                                                        <a data-toggle="collapse" href="#collapseExample" role="button"
-                                                            aria-expanded="false" aria-controls="collapseExample">
+                                                        <a data-toggle="collapse" href="#collapseExample{{ item.id }}_id" role="button"
+                                                            aria-expanded="false" aria-controls="collapseExample{{ item.id }}">
                                                             Thông tin chi tiết <i class="fa fa-angle-down"></i>
                                                         </a>
                                                     </div>
                                                     <div class="button">
                                                         <button data-toggle="collapse"
-                                                            onclick="chonXe('#scroll1<%=1%>',800,'chuyendi',1,1)"
-                                                            data-target="#collapseChonChuyen" aria-expanded="false"
-                                                            aria-controls="collapseChonChuyen" name="idChuyenXe"
-                                                            value="2" type="button">Chọn chuyến</button>
-                                                        <input class="form-check-input" type="hidden" value="1"
+                                                            onclick="chonXe('',800,'chuyendi',{{ item.id }},{{ item.id }})"
+                                                            data-target="#collapseChonChuyen{{ item.id }}" aria-expanded="false"
+                                                            aria-controls="collapseChonChuyen{{ item.id }}" name="idChuyenXe"
+                                                            value="{{ item.id }}" type="button">Chọn chuyến</button>
+                                                        <input class="form-check-input" type="hidden" value="{{ item.id }}"
                                                             name="inputIdChuyenXe" id="inputIdChuyenXe">
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <!-- cardbottom1 -->
-                                            <div class="card__bottom">
-                                                <div class="collapse" id="collapseExample">
+                                            <!-- cardbottom-hinhanh -->
+                                          <div class="card__bottom">
+                                                <div class="collapse" id="collapseExample{{ item.id }}_id">
                                                     <div class="card card-body">
                                                         <div class="project">
                                                             <ul class="nav nav-pills mb-3" id="pills-tab"
                                                                 role="tablist">
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link active" id="pills-img-tab"
-                                                                        data-toggle="pill" href="#img" role="tab"
+                                                                        data-toggle="pill" href="#img{{ item.id}}_id" role="tab"
                                                                         aria-controls="pills-img"
                                                                         aria-selected="true">Hình
                                                                         ảnh</a></li>
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link" id="pills-cmt-tab"
-                                                                        data-toggle="pill" href="#pills-cmt" role="tab"
+                                                                        data-toggle="pill" href="#pills-cmt{{ item.id}}_id" role="tab"
                                                                         aria-controls="pills-cmt"
                                                                         aria-selected="false">Tiện ích </a></li>
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link" id="pills-travel-tab"
-                                                                        data-toggle="pill" href="#pills-travel"
+                                                                        data-toggle="pill" href="#pills-travel{{ item.id}}_id"
                                                                         role="tab" aria-controls="pills-travel"
                                                                         aria-selected="false">Điểm
                                                                         Đón Trả</a></li>
 
                                                             </ul>
 
-                                                            <div class="tab-content" id="pills-tabContent">
-                                                                <div class="tab-pane fade show active" id="img"
+                                                            <div class="tab-content" id="pills-tabContent{{ item.id}}">
+                                                                <div class="tab-pane fade show active" id="img{{ item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-img-tab">
                                                                 </div>
 
-                                                                <div class="tab-pane fade" id="pills-cmt"
+                                                                <div class="tab-pane fade" id="pills-cmt{{item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-cmt-tab">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -538,7 +650,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="tab-pane fade" id="pills-travel"
+                                                                <div class="tab-pane fade" id="pills-travel{{item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-travel-tab">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -612,27 +724,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
+                                        <form action="/datve" method="POST" style="margin-bottom: 16px!important;">
                                         <div class="card__bottom">
-                                            <div class="collapse" id="collapseChonChuyen">
+                                            <div class="collapse" id="collapseChonChuyen{{ item.id }}">
                                                 <div class="card card-body">
                                                     <div class="project">
-                                                        <ul class="nav nav-pills mb-3 nav-tabs" id="pills-tab2"
+                                                        <ul class="nav nav-pills mb-3 nav-tabs" id="pills-tab{{ item.id }}"
                                                             role="tablist">
                                                             <li class="nav-item " role="presentation"><a
                                                                     class="nav-link active nav-link_1"
-                                                                    id="pills-img-tab2" data-toggle="pill" href="#img2"
+                                                                    id="pills-img-tab{{ item.id }}" data-toggle="pill" href="#img{{ item.id }}"
                                                                     role="tab" aria-controls="pills-img"
-                                                                    aria-selected="true"><input class="form-check-input"
+                                                                    aria-selected="true">
+                                                                    <input class="form-check-input"
                                                                         type="hidden" name="inlineRadioOptions"
-                                                                        id="inlineRadio1" value="option1"> <label
+                                                                        id="inlineRadio{{ item.id }}" value="option{{ item.id }}">
+                                                                         <label
                                                                         class="form-check-label line-connect"
-                                                                        for="inlineRadio1">1.Chỗ
+                                                                        for="inlineRadio{{ item.id }}">1.Chỗ
                                                                         mong muốn -></label></a></li>
                                                             <li class="nav-item" role="presentation"><a
-                                                                    class="nav-link nav-link_2" id="pills-cmt-tab2"
-                                                                    data-toggle="pill" href="#pills-cmt2" role="tab"
+                                                                    class="nav-link nav-link_{{ item.id }}" id="pills-cmt-tab{{ item.id }}"
+                                                                    data-toggle="pill" href="#pills-cmt{{ item.id }}" role="tab"
                                                                     aria-controls="pills-cmt"
                                                                     aria-selected="false"><input
                                                                         class="form-check-input" type="hidden"
@@ -641,8 +756,8 @@
                                                                         for="inlineRadio2">2.Điểm đón trả -></label>
                                                                 </a></li>
                                                             <li class="nav-item " role="presentation"><a
-                                                                    class="nav-link nav-link_3" id="pills-travel-tab3"
-                                                                    data-toggle="pill" href="#pills-travel3" role="tab"
+                                                                    class="nav-link nav-link_{{ item.id }}" id="pills-travel-tab{{ item.id }}"
+                                                                    data-toggle="pill" href="#pills-travel{{ item.id }}" role="tab"
                                                                     aria-controls="pills-travel"
                                                                     aria-selected="false"><input
                                                                         class="form-check-input" type="hidden"
@@ -653,8 +768,8 @@
 
                                                         </ul>
                                                         <div class="tab-content" id="pills-tabContent">
-                                                            <div class="tab-pane fade show active" id="img2"
-                                                                role="tabpanel" aria-labelledby="pills-img-tab2">
+                                                            <div class="tab-pane fade show active" id="img{{ item.id }}"
+                                                                role="tabpanel" aria-labelledby="pills-img-tab{{ item.id }}">
                                                                 
                                                                 <div class="SeatSelectionOnline__SeatSelection-sc-167eirc-0 hqRXwu">
                                                                     <div class="seat-groups">
@@ -833,7 +948,6 @@
                                                                               {% with trip_id=item.id %}
                                                                               {% for data in detail %}
                                                                                 {% if data.trip_id == trip_id %}
-                                                                                  <!-- data.list_seat(id, number_chair, status)  -->
                                                                                   {% if item.num_seat == 16 %}
                                                                                     {% include 'customers/list_16_seat.html' %}
                                                                                   {% endif %}
@@ -843,7 +957,6 @@
                                                                                 {% endif %}
                                                                               {% endfor %}
                                                                               {% endwith %}
-                                                                              
                                                                             </tbody>
                                                                           </table>
                                                                         </div>
@@ -871,17 +984,16 @@
                                                                         style="display: flex; justify-content: flex-end; margin-top: 10px;">
                                                                         <p
                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 5px;">
-                                                                            Tổng
-                                                                            cộng: 0đ</p>
+                                                                            {{ item.price }}.000 VNĐ</p>
                                                                         <button type="button"
-                                                                            class="btn btn-primary btnNext">Tiếp
+                                                                            class="btn btn-primary btnNext" onclick="btnNext({{item.id }},0)">Tiếp
                                                                             tục</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="tab-pane fade" id="pills-cmt2" role="tabpanel"
-                                                                aria-labelledby="pills-cmt-tab2">
+                                                            <div class="tab-pane fade" id="pills-cmt{{ item.id }}" role="tabpanel"
+                                                                aria-labelledby="pills-cmt-tab{{ item.id }}">
                                                                 <div class="row">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -1025,14 +1137,14 @@
                                                                                 <div
                                                                                     style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px;">
                                                                                     <button type="button"
-                                                                                        class="btn btn-secondary btnPrevious">Quay
+                                                                                        class="btn btn-secondary " onclick="btnPrevious({{item.id }},0)">Quay
                                                                                         lại</button>
                                                                                     <div style="display: flex;">
                                                                                         <p
                                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 10px;">
                                                                                             Tổng
                                                                                             cộng: 0đ</p>
-                                                                                        <button type="button" class="btn btn-primary btnNext" >
+                                                                                        <button type="button" class="btn btn-primary btnNext" onclick="btnNext({{ item.id }},1)" >
                                                                                             Tiếp tục
                                                                                         </button>
                                                                                     </div>
@@ -1044,8 +1156,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="tab-pane fade" id="pills-travel3"
-                                                                role="tabpanel" aria-labelledby="pills-travel-tab3">
+                                                            <div class="tab-pane fade" id="pills-travel{{ item.id }}"
+                                                                role="tabpanel" aria-labelledby="pills-travel-tab{{ item.id }}">
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <div
@@ -1110,8 +1222,8 @@
                                                                                 <div
                                                                                     style="display: flex; align-items: center; justify-content: space-between;">
                                                                                     <button type="button"
-                                                                                        class="btn btn-secondary btnPrevious"
-                                                                                        style="margin-top: 20px">Quay
+                                                                                        class="btn btn-secondary "
+                                                                                        style="margin-top: 20px" onclick="btnPrevious({{ item.id }},1)">Quay
                                                                                         lại</button>
                                                                                     <div
                                                                                         style="display: flex; margin-top: 10px;">
@@ -1134,10 +1246,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <form>
                                     </div>
-                                </form>
-                                {% endfor %}
+                                </div>
                                 
+                                {% endfor %}
                             </div>
 
                         </div>
@@ -1167,129 +1280,7 @@
 
 
     <script src="{% static 'customers/js/tinhtien.js' %}"></script>
-    <script type="text/javascript">
-        var onClick = (n) => {
-            /* var disabled2= document.querySelector(`.nav-link_1`);
-            disabled2.classList.add('disabled');  */
-
-        }
-
-        var onClick2 = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_2`);
-            disabled2.classList.add('disabled');
-
-        }
-
-        var onClick3 = (n) => {
-            /* var disabled2= document.querySelector(`.nav-link_3`);
-            disabled2.classList.add('disabled');  */
-
-        }
-
-        var goBack = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_2`);
-            if (disabled2.classList.contains('disabled')) {
-                disabled2.classList.remove('disabled');
-            }
-
-        }
-
-        var goBack2 = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_3`);
-            if (disabled2.classList.contains('disabled')) {
-                disabled2.classList.remove('disabled');
-            }
-
-        }
-        /* nextTab */
-        const nextBtn = document.querySelectorAll(".btnNext");
-        const prevBtn = document.querySelectorAll(".btnPrevious");
-
-        nextBtn.forEach(function (item, index) {
-
-            item.addEventListener('click', function () {
-                let id1 = index;
-                let id2 = index + 1;
-                /*       let tabElement1 = document.querySelectorAll("#pills-tab2 li a")[id1]; */
-                let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2];
-                var lastTab = new bootstrap.Tab(tabElement2);
-                /*       tabElement1.classList.add('disabled'); */
-                lastTab.show();
-            });
-        });
-
-        prevBtn.forEach(function (item, index) {
-            item.addEventListener('click', function () {
-                let id = index;
-                let id2 = index - 1;
-                let tabElement = document.querySelectorAll("#pills-tab2 li a")[id];
-
-                /*       let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2]; */
-                /*       tabElement?.classList?.remove('disabled'); */
-
-                var lastTab = new bootstrap.Tab(tabElement);
-                lastTab.show();
-            });
-        });
-
-        /* //check validatate */
-
-        var input1 = document.getElementById("inputName");
-        var input2 = document.getElementById("inputPhone");
-        var input3 = document.getElementById("inputEmail");
-
-        var error2 = document.getElementById("error2");
-        input1.onblur = function () {
-            if (input1.value.length == 0) {
-                input1.classList.add('invalid');
-                error1.innerHTML = 'Please enter a correct first name and last name.'
-            }
-        };
-
-        input1.onfocus = function () {
-            input1.classList.remove('invalid');
-            error1.innerHTML = "";
-        };
-
-        function validatePhoneNumber(input_str) {
-            var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-
-            return re.test(input_str);
-        }
-
-
-        input2.onblur = function () {
-            if (!validatePhoneNumber(input2.value)) {
-                input2.classList.add('invalid');
-                error2.innerHTML = 'Please enter a correct number phone.';
-                /* 				error2.innerText = 'Please enter a correct number phone.'; */
-                /* 				console.log(error2) */
-            }
-        };
-
-        input2.onfocus = function () {
-            if (this.classList.contains('invalid2')) {
-                this.classList.remove('invalid2');
-                error2.innerHTML = "";
-            }
-        };
-
-
-        input3.onblur = function () {
-            if (input3.value.length === 0) {
-                input3.classList.add('invalid');
-                error3.innerHTML = 'Please enter a correct email.'
-            }
-        };
-
-        input3.onfocus = function () {
-            if (this.classList.contains('invalid')) {
-                this.classList.remove('invalid');
-                error3.innerHTML = "";
-            }
-        };
-
-    </script>
+    
     <script>
         var count = 0;
       
