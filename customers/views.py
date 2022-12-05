@@ -251,13 +251,15 @@ def listCoach(request):
     data = serializers.serialize('json', list_trip)
     import json
     data_dict = json.loads(data)
-    detail = {}
+    detail = []
     for item in data_dict:
         list_seat = Seat.objects.all().filter(trip_id = item['pk']).values('id', 'number_chair', 'status')
         list_musty = Schedule.objects.all().filter(garage_id = item['fields']['garage']).values()
-        detail[item['pk']] = {
+        trip_id = item['pk']
+        detail.append ({
+            'trip_id': trip_id,
             'list_seat': list_seat,
             'list_musty': list_musty,
-        }
+        })
     # return HttpResponse(detail[1]['list_seat'][0]['number_chair'], content_type='application/json')
     return render(request, 'customers/listCoach.html', {'list_trip': list_trip, 'detail': detail})  
