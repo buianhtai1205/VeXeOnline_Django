@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 import random 
 import string
 from datetime import datetime
-import phonenumbers
+# import phonenumbers
 # Create your views here.
 def index(request):
    return render(request, 'customers/index.html')
