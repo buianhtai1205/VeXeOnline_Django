@@ -17,11 +17,11 @@ def index(request):
    return render(request, 'customers/index.html')
 
 def loginView(request):
-   return render(request, 'customers/login_view.html')
+   return render(request, 'customers/login/login_view_notify.html')
 
 def quanlyveView(request):
    content = quanlyveInfo(request)
-   return render(request, 'customers/quanlyveView.html',content)
+   return render(request, 'customers/user_info/quanlyveView.html',content)
 
 def userInfo(request):
    content = {}
@@ -37,7 +37,7 @@ def userInfo(request):
         if (request.session['numberPhone']):
             numberPhone = request.session['numberPhone']
             content['numberPhone'] = numberPhone
-   return render(request, 'customers/userInfo.html',content)
+   return render(request, 'customers/user_info/userInfo.html',content)
 
 @csrf_exempt
 def checkCustomer(request):
@@ -64,7 +64,7 @@ def checkCustomer(request):
             else:
                 messages = "Số điện thoại hoặc mật khẩu không đúng!"
                 content = {'messages': messages}
-                return render(request, 'customers/login_view.html',content)
+                return render(request, 'customers/login/login_view_notify.html',content)
     return HttpResponse("Sai method")
 
 @csrf_exempt
@@ -91,7 +91,7 @@ def forgotPassword(request):
         else:
             messages = "Số điện thoại không đúng!"
             content = {'messages': messages}
-            return render(request, 'customers/login_view.html',content)
+            return render(request, 'customers/login/login_view_notify.html',content)
     return HttpResponse("Sai method")
     
 
