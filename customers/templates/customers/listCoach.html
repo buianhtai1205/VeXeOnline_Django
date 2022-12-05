@@ -1010,60 +1010,35 @@
                                                                                         <div class="card__right1">
                                                                                             <h6>Điểm đón</h6>
                                                                                             <ul>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="1"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:30 • Bãi
-                                                                                                        Xe Thành
-                                                                                                        Thái
+                                                                                              {% for data in detail %}
+                                                                                              {% if data.trip_id == item.id %}
+                                                                                                {% if item.departure == item.garage.address %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                    {% if place.status == 0 %}
+                                                                                                    <li class="form-check" style="display: flex">
+                                                                                                    <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                        value="{{ place.id }}" >
+                                                                                                    <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                      {{ place.musty }}
                                                                                                     </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="2"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:40 • Lý
-                                                                                                        Thường Kiệt
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="3"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:50 • Cây
-                                                                                                        xăng mũi tàu
-                                                                                                        Trường
-                                                                                                        Chinh</label>
-                                                                                                </li>
-
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% else %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                  {% if place.status == 1 %}
+                                                                                                  <li class="form-check" style="display: flex">
+                                                                                                  <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                      value="{{ place.id }}" >
+                                                                                                  <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                    {{ place.musty }}
+                                                                                                  </label>
+                                                                                                  </li>
+                                                                                                  {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% endif %}
+                                                                                              {% endif %}
+                                                                                              {% endfor %}
                                                                                             </ul>
                                                                                         </div>
 
@@ -1071,59 +1046,35 @@
                                                                                             <h6>Điểm trả</h6>
 
                                                                                             <ul>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="4"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        style="font-size: 16px"
-                                                                                                        for="exampleRadios2">
-                                                                                                        06:30 • Bãi
-                                                                                                        Xe Thành
-                                                                                                        Thái
+                                                                                              {% for data in detail %}
+                                                                                              {% if data.trip_id == item.id %}
+                                                                                                {% if item.departure == item.garage.address %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                    {% if place.status == 1 %}
+                                                                                                    <li class="form-check" style="display: flex">
+                                                                                                    <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                        value="{{ place.id }}" >
+                                                                                                    <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                      {{ place.musty }}
                                                                                                     </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="5"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios2"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:40 • Lý
-                                                                                                        Thường Kiệt
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="6"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios2"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:50 • Cây
-                                                                                                        xăng mũi tàu
-                                                                                                        Trường
-                                                                                                        Chinh</label>
-                                                                                                </li>
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% else %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                  {% if place.status == 0 %}
+                                                                                                  <li class="form-check" style="display: flex">
+                                                                                                  <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                      value="{{ place.id }}" >
+                                                                                                  <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                    {{ place.musty }}
+                                                                                                  </label>
+                                                                                                  </li>
+                                                                                                  {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% endif %}
+                                                                                              {% endif %}
+                                                                                              {% endfor %}
                                                                                             </ul>
                                                                                         </div>
 
