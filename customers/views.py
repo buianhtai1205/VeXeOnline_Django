@@ -13,6 +13,9 @@ import string
 from datetime import datetime
 # import phonenumbers
 # Create your views here.
+number_chair1=""
+number_chair2=""
+number_chair3=""
 def index(request):
    return render(request, 'customers/index.html')
 
@@ -46,8 +49,8 @@ def checkCustomer(request):
             numberPhone = login_data['numberPhone']
             password = login_data['password']
             num_rows = Customer.objects.filter(phoneNumber=numberPhone, password=password).count()
-            nameUser=None
-            emailUser = None
+            nameUser=""
+            emailUser = ""
             sql = "SELECT * FROM customers_customer where phoneNumber =" + numberPhone
             User = Customer.objects.raw(sql)
             for data in User:
@@ -58,8 +61,8 @@ def checkCustomer(request):
                 request.session['fullname'] = nameUser
                 request.session['email'] = emailUser
                 messages = "Đăng nhập thành công!"
+                getTripByTicket(request,numberPhone)
                 content = {'numberPhone': numberPhone, 'messages': messages}
-            
                 return redirect(reverse('customers:userInfo', kwargs = {}))
             else:
                 messages = "Số điện thoại hoặc mật khẩu không đúng!"
@@ -101,48 +104,108 @@ def forgotPassword(request):
 @csrf_exempt
 def datve(request):
   if request.method == 'POST':
+    data = request.POST.dict()
     idChuyen = request.POST.get('inputIdChuyenXe', '')
-    idGhe = request.POST.get('gheDangChon', '')
-    tenKh = request.POST.get('nameUser', '')
-    phoneUser = request.POST.get('phoneUser', '')
-    email = request.POST.get('emailUser', '')
+    idGhe1 = request.POST.get('seatID1', '')
+    idGhe2 = request.POST.get('seatID2', '')
+    idGhe3 = request.POST.get('seatID3', '')
+    diemDon = request.POST.get('checkbox', '')
+    diemTra = request.POST.get('_checkbox', '')
+    tenKh = data['nameUser'+ str(1)]
+    phoneUser = data['phoneUser'+ str(1)]
+    email = data['emailUser'+ str(1)]
     password = _pw(8)
-
     sid = transaction.savepoint()
     # add Customer
-    kh =  Customer()
-    kh.fullName = tenKh
-    kh.phoneNumber = phoneUser
-    kh.email = email
-    kh.password = password
-    kh.save()
+    if idChuyen != "" and diemDon != "" and diemTra != "":
+        kh =  Customer()
+        kh.fullName = tenKh
+        kh.phoneNumber = phoneUser
+        kh.email = email
+        kh.password = password
+        kh.save()
 
     # add Ticket
-    sql = "SELECT id from customers_customer where phoneNumber = " + phoneUser
-    User = Customer.objects.raw(sql)
-    for data in User:
-        idUser=data.id
+        sqlDiemDon = "SELECT id,musty from managers_schedule where id = " + str(diemDon)
+        _Schedule = Schedule.objects.raw(sqlDiemDon)
+        for data in _Schedule:
+            mustyDon=data.musty
 
-    _idChuyen = idChuyen
-    _idSeat = idGhe
-    _idCustomer= idUser
+        sqlDiemTra = "SELECT id,musty from managers_schedule where id = " + str(diemTra)
+        _Schedule = Schedule.objects.raw(sqlDiemTra)
+        for data in _Schedule:
+            mustyTra=data.musty
 
-    if(_idSeat != None):
-        ticket = Ticket()
-        ticket.trip_id = _idChuyen
-        ticket.seat_id = _idSeat
-        ticket.customer_id = _idCustomer
-        ticket.save() 
-    data = "Chuyến số: " + idChuyen + " \nGhế số: " + idGhe + " \nĐịa điểm đón: "  + " \nĐịa điểm trả: " + "\nTài khoản để đăng nhập để kiểm tra vé là: Tên đăng nhập: " + phoneUser +" " + "Mật khẩu: "+ password;
-    send_mail('Welcome!', data, "PLC", [email], fail_silently=False)
-    if IntegrityError:
-            transaction.savepoint_rollback(sid)
-    else:
-            try:
-                transaction.savepoint_commit(sid)
-            except IntegrityError:
+        sql = "SELECT id from customers_customer where phoneNumber = " + str(phoneUser)
+        User = Customer.objects.raw(sql)
+        for data in User:
+            idUser=data.id
+        
+        _idChuyen = idChuyen
+        _idSeat1 = idGhe1
+        _idSeat2 = idGhe2
+        _idSeat3 = idGhe3
+        _idCustomer= idUser
+        _diemDon= diemDon
+
+        if(_idSeat1 != "" and _idChuyen != "" and _diemDon != "" and _idCustomer != ""):
+          
+            if _idSeat1 != "" :
+                ticket = Ticket()
+                ticket.trip_id = _idChuyen
+                ticket.seat_id = _idSeat1
+                ticket.customer_id = _idCustomer
+                ticket.schedule_id = _diemDon
+                ticket.save() 
+
+                seat = "SELECT * FROM managers_seat WHERE id = " + str(idGhe1)
+                _Seat = Seat.objects.raw(seat)
+                for data in _Seat:
+                    number_chair1=data.number_chair
+            if  _idSeat2 != "" :
+                ticket = Ticket()
+                ticket.trip_id = _idChuyen
+                ticket.seat_id = _idSeat2
+                ticket.customer_id = _idCustomer
+                ticket.schedule_id = _diemDon
+                ticket.save() 
+                
+                seat = "SELECT * FROM managers_seat WHERE id = " + str(idGhe2)
+                _Seat = Seat.objects.raw(seat)
+                for data in _Seat:
+                    number_chair2=data.number_chair
+            if _idSeat3 != "":
+                ticket = Ticket()
+                ticket.trip_id = _idChuyen
+                ticket.seat_id = _idSeat3 
+                ticket.customer_id = _idCustomer
+                ticket.schedule_id = _diemDon
+                ticket.save() 
+                
+                seat = "SELECT * FROM managers_seat WHERE id = " + str(idGhe3)
+                _Seat = Seat.objects.raw(seat)
+                for data in _Seat:
+                    number_chair3=data.number_chair
+           
+            trip = "SELECT * from managers_trip where managers_trip.id =" + str(_idChuyen);
+            _getTrip = Trip.objects.raw(trip)
+            for data in _getTrip:
+                departure= data.departure
+                destination=data.destination
+                departure_time=data.departure_time
+                price=data.price
+
+            data = "Xin chào bạn: Cảm ơn bạn đã đặt vé bên công ty chúng tôi, đây là thông tin vé của bạn :\nGhế số: " + number_chair1 + " " + number_chair2 +"" +  str(number_chair3) + " \nĐịa điểm đón: "  + str(mustyDon) + " " + destination +  " \nĐịa điểm trả: " + str(mustyTra) +" " +  departure + "\nGiờ khởi hành: " + str(departure_time) + "\nGiá vé: " + str(price)+".000" +"\nTài khoản để đăng nhập để kiểm tra vé là: Tên đăng nhập: " + phoneUser +" " + "Mật khẩu: "+ password;
+            send_mail('Welcome!', data, "PLC", [email], fail_silently=False)
+            print("done")
+        if IntegrityError:
                 transaction.savepoint_rollback(sid)
-    return render(request, 'customers/success.html')
+        else:
+                try:
+                    transaction.savepoint_commit(sid)
+                except IntegrityError:
+                    transaction.savepoint_rollback(sid)
+        return render(request, 'customers/success.html')
   return HttpResponse("Sai method")
 
 def _pw(length=8):
@@ -158,6 +221,7 @@ def getTripByTicket(request,phoneNumber):
     for data in _Trip:
         trip_id=data.trip_id
         seat_id=data.seat_id
+        seat_id2 = data.seat_id
     trip = "SELECT * from managers_trip where managers_trip.id =" + str(trip_id);
     _getTrip = Trip.objects.raw(trip)
     for data in _getTrip:
@@ -173,11 +237,22 @@ def getTripByTicket(request,phoneNumber):
             fullnameGarage=data.fullName
             description=data.description
         # getSeat 
-        seat = "SELECT * FROM Seat WHERE id = " + str(seat_id);
-        _Seat = Seat.objects.raw(idGarage)
-        for data in _Seat:
+        seat1 = "SELECT * FROM managers_seat WHERE id = " + str(seat_id);
+        _Seat1 = Seat.objects.raw(seat1)
+        for data in _Seat1:
             number_chair=data.number_chair
-            # status=data.status
+
+        seat2 = "SELECT * FROM managers_seat WHERE id = " + str(seat_id2);
+        _Seat2 = Seat.objects.raw(seat2)
+        for data in _Seat2:
+            number_chair2=data.number_chair
+        print(number_chair1)
+        print(number_chair2)
+
+        number_Seats = "SELECT 1 as id,count(*) as nb_seats FROM managers_ticket WHERE managers_ticket.trip_id = " + str(trip_id) + " group by trip_id";
+        number_Seatss = Seat.objects.raw(number_Seats)
+        for data in number_Seatss:
+              number_Seat=data.nb_seats
         request.session['departure'] = departure
         request.session['destination'] = destination
         request.session['departure_time'] = str(departure_time)
@@ -185,6 +260,8 @@ def getTripByTicket(request,phoneNumber):
         request.session['fullnameGarage'] = fullnameGarage
         request.session['description'] = description
         request.session['number_chair'] = number_chair
+        request.session['number_chair2'] = number_chair2
+        request.session['number_Seat'] = str(number_Seat)
         # request.session['status'] = status
         
 def quanlyveInfo(request):
@@ -192,15 +269,11 @@ def quanlyveInfo(request):
    if 'departure' in request.session:
         if (request.session['departure']):
             departure = request.session['departure']
-            # email = request.session['email']
             content['departure'] = departure
-            # content['email'] = email
    if 'destination' in request.session:
         if (request.session['destination']):
             destination = request.session['destination']
-            # email = request.session['email']
             content['destination'] = destination
-            # content['email'] = email
    if 'departure_time' in request.session:
         if (request.session['departure_time']):
             departure_time = request.session['departure_time']
@@ -221,6 +294,14 @@ def quanlyveInfo(request):
         if (request.session['number_chair']):
             number_chair = request.session['number_chair']
             content['number_chair'] = number_chair
+   if 'number_chair2' in request.session:
+        if (request.session['number_chair2']):
+            number_chair2 = request.session['number_chair2']
+            content['number_chair2'] = number_chair2
+   if 'number_Seat' in request.session:
+        if (request.session['number_Seat']):
+            number_Seat = request.session['number_Seat']
+            content['number_Seat'] = number_Seat
    return content
 
     

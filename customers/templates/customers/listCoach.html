@@ -471,7 +471,7 @@
                 </div>
 
                 <div class="col-8">
-                    <div class="mid__right animate__animated animate__fadeInRight animate__delay-1s">
+                    
                         <!-- <h2>Đặt mua vé xe đi Đắk Lắk từ Sài Gòn chất lượng cao và giá vé ưu đãi nhất: 296 chuyến</h2>
                         <div class="flash__sale">
                             <img class="animate__animated animate__fadeInRight animate__delay-1s"
@@ -486,7 +486,6 @@
 
 
 
-                        <div class="project__content">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <span>Sắp xếp theo:</span>
                                 <li class="nav-item" role="presentation">
@@ -507,10 +506,8 @@
                                 </li>
                             </ul>
 
-                            <div class="{{ item.id }}" id="{{ item.id }}">
                                 {% for item in list_trip %}
-                                <div>
-                                    {% csrf_token %}
+                                <div id="{{ item.id }}">
                                     <div class="tab-pane fade show active" id="all" role="tabpanel"
                                         aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
                                         <div class="vexe">
@@ -529,7 +526,6 @@
                                                         <br> 
                                                         <i class="fa fa-map-marker-alt"></i>
                                                     </div>
-
                                                 </div>
                                                 <div class="collasp">
                                                     <div class="card__link">
@@ -726,8 +722,8 @@
                                                 </div>
                                             </div> 
                                         </div>
-                                        <form action="/datve" method="POST" style="margin-bottom: 16px!important;">
                                         <div class="card__bottom">
+                                        <form action="/datve" method="POST" style="margin-bottom: 16px!important;" id="{{ item.id } + 1}">
                                             <div class="collapse" id="collapseChonChuyen{{ item.id }}">
                                                 <div class="card card-body">
                                                     <div class="project">
@@ -963,28 +959,16 @@
                                                                       </div>
                                                                     </div>
                                                                   </div>
-                                                                  <div id="seat_result"></div>
-                                                                  <!-- <input type="text" value="{{ detail }}">
-                                                                  {% with trip_id=item.id %}
-                                                                  {% for data in detail %}
-                                                                    {% if data.trip_id == trip_id %}
-                                                                    <input type="text" value="{{ data.list_seat.0 }}">
-                                                                      {% for seat in data.list_seat %}
-                                                                      {% endfor %}
-                                                                    {% endif %}
-                                                                  {% endfor %}
-                                                                  {% endwith %} -->
-
-                                                                
+                                                                  <div id="seat_result"></div>                                              
                                                                 <div style="border-top: 1px solid;">
                                                                     <div class="line"
                                                                         style="display: block; border-bottom: 10px;">
                                                                     </div>
                                                                     <div
                                                                         style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                                                                        <p
+                                                                        {% comment %} <p
                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 5px;">
-                                                                            {{ item.price }}.000 VNĐ</p>
+                                                                            {{ item.price }}.000 VNĐ</p> {% endcomment %}
                                                                         <button type="button"
                                                                             class="btn btn-primary btnNext" onclick="btnNext({{item.id }},0)">Tiếp
                                                                             tục</button>
@@ -993,7 +977,7 @@
                                                             </div>
 
                                                             <div class="tab-pane fade" id="pills-cmt{{ item.id }}" role="tabpanel"
-                                                                aria-labelledby="pills-cmt-tab{{ item.id }}">
+                                                                aria-labelledby="pills-cmt-tab{{ item.id }}" novalidate>
                                                                 <div class="row">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -1016,9 +1000,9 @@
                                                                                                   {% for place in data.list_musty %}
                                                                                                     {% if place.status == 0 %}
                                                                                                     <li class="form-check" style="display: flex">
-                                                                                                    <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                    <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox"
                                                                                                         value="{{ place.id }}" >
-                                                                                                    <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                    <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
                                                                                                       {{ place.musty }}
                                                                                                     </label>
                                                                                                     </li>
@@ -1028,9 +1012,9 @@
                                                                                                   {% for place in data.list_musty %}
                                                                                                   {% if place.status == 1 %}
                                                                                                   <li class="form-check" style="display: flex">
-                                                                                                  <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                  <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox"
                                                                                                       value="{{ place.id }}" >
-                                                                                                  <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                  <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
                                                                                                     {{ place.musty }}
                                                                                                   </label>
                                                                                                   </li>
@@ -1052,9 +1036,9 @@
                                                                                                   {% for place in data.list_musty %}
                                                                                                     {% if place.status == 1 %}
                                                                                                     <li class="form-check" style="display: flex">
-                                                                                                    <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
+                                                                                                    <input class="form-check-input" type="checkbox" name="_checkbox" id="_checkbox"
                                                                                                         value="{{ place.id }}" >
-                                                                                                    <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
+                                                                                                    <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
                                                                                                       {{ place.musty }}
                                                                                                     </label>
                                                                                                     </li>
@@ -1064,10 +1048,10 @@
                                                                                                   {% for place in data.list_musty %}
                                                                                                   {% if place.status == 0 %}
                                                                                                   <li class="form-check" style="display: flex">
-                                                                                                  <input class="form-check-input" type="radio" name="checkbox1" id="checkbox1"
-                                                                                                      value="{{ place.id }}" >
-                                                                                                  <label class="form-check-label"  for="exampleRadios1" style="font-size: 16px">
-                                                                                                    {{ place.musty }}
+                                                                                                    <input class="form-check-input" type="checkbox" name="_checkbox" id="_checkbox"
+                                                                                                    value="{{ place.id }}" >
+                                                                                                <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
+                                                                                                  {{ place.musty }}
                                                                                                   </label>
                                                                                                   </li>
                                                                                                   {% endif %}
@@ -1091,10 +1075,10 @@
                                                                                         class="btn btn-secondary " onclick="btnPrevious({{item.id }},0)">Quay
                                                                                         lại</button>
                                                                                     <div style="display: flex;">
-                                                                                        <p
+                                                                                        {% comment %} <p
                                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 10px;">
                                                                                             Tổng
-                                                                                            cộng: 0đ</p>
+                                                                                            cộng: {{item.price }}.000đ</p> {% endcomment %}
                                                                                         <button type="button" class="btn btn-primary btnNext" onclick="btnNext({{ item.id }},1)" >
                                                                                             Tiếp tục
                                                                                         </button>
@@ -1121,8 +1105,8 @@
                                                                                 <div>
                                                                                     <div class="form-group ">
                                                                                         <input type="text" class="form-control top"
-                                                                                            id="inputName" placeholder="First and Last name "
-                                                                                            name="nameUser" value="" required>
+                                                                                            id="inputName{{ item.id }}" placeholder="First and Last name "
+                                                                                            name="nameUser{{ item.id }}" value="">
                                                                                        
                                                                                         <div>
                                                                                             <p id="error1"></p>
@@ -1130,32 +1114,38 @@
                                                                                     </div>
 
                                                                                     <div class="form-group ">
-                                                                                        <input type="text"
-                                                                                            class="form-control top inputPhone"
-                                                                                            id="inputPhone" placeholder="Number phone "
-                                                                                            name="phoneUser" value="" required>
-                                                                                            <div>
-                                                                                                <p id="error1"></p>
-                                                                                            </div>
+                                                                                        <input
+                                                                                        type="text"
+                                                                                        class="form-control top"
+                                                                                        id="input{{ item.id }}"
+                                                                                        aria-describedby="phoneHelp"
+                                                                                        placeholder="Phone number"
+                                                                                        name="phoneUser{{ item.id }}"
+                                                                                        pattern="[0-9]{10}"
+                                                                                        value=""
+                                                                                      />
+                                                                                            {% comment %} <div>
+                                                                                                <p id="error2"></p>
+                                                                                            </div> {% endcomment %}
                                                                                     </div>
 
                                                                                     <div class="form-group ">                                                                                    
                                                                                         <input type="text"
                                                                                             class="form-control top"
-                                                                                            id="inputEmail"
+                                                                                            id="inputEmail{{ item.id }}"
                                                                                             placeholder="Email (abc@gmail.com)"
-                                                                                            name="emailUser" value="" required>
-                                                                                        <div>
+                                                                                            name="emailUser{{ item.id }}" value="" >
+                                                                                        {% comment %} <div>
                                                                                             <p id="error3"></p>
-                                                                                        </div>
+                                                                                        </div> {% endcomment %}
                                                                                     </div>
                                                                                     <div class="form-group ">
                                                                                         <input type="text"
                                                                                             class="form-control top"
-                                                                                            id="inputOther"
+                                                                                            id="inputOther{{ item.id }}"
                                                                                             aria-describedby="otherHelp"
                                                                                             placeholder="Note"
-                                                                                            name="noteUser" value="">
+                                                                                            name="noteUser{{ item.id }}" >
                                                                                         <!-- <div>
                                                                                             <p id="error4"></p>
                                                                                         </div> -->
@@ -1181,12 +1171,11 @@
                                                                                         <p
                                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 5px;">
                                                                                             Tổng
-                                                                                            cộng: 0đ</p>
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Xác
-                                                                                            nhận</button>
-                                                                                    </div>
-
+                                                                                            cộng: {{item.price}}.000đ</p>
+                                                                                        </div>
+                                                                                        <button type="submit" id="{{ item.id }}"
+                                                                                            class="btn btn-primary {{ item.id }}">Xác
+                                                                                            nhận </button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1196,16 +1185,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <form>
                                         </div>
-                                        <form>
                                     </div>
                                 </div>
                                 
                                 {% endfor %}
-                            </div>
 
-                        </div>
-                    </div>
                 </div>
             </div>
     </section>
@@ -1245,13 +1231,13 @@
             
               if (count < 4)
               {
-                  seat[0].classList.add("cUIhrn");
+                seat[0].classList.add("cUIhrn");
                 let seatItem = document.createElement("input");
                 let name = "seatID" + count.toString();
                 seatItem.setAttribute("id", name);
                 seatItem.setAttribute("name", name);
                 seatItem.setAttribute("value", seat_id);
-                // seatItem.setAttribute('hidden', true);
+                seatItem.setAttribute('hidden', true);
                 seat_result.appendChild(seatItem);
               } else {
                   alert(

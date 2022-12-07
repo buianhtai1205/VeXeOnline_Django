@@ -54,7 +54,7 @@
         <tr>
           {% if price %}
           <div class="col-sm-9 text-secondary">
-            <td id="td1">Giá vé: {{price}}</td>
+            <td id="td1">Giá vé: {{price}}.000đ</td>
           </div>
           {%else%}
           <div class="col-sm-9 text-secondary">
@@ -63,13 +63,20 @@
           {% endif %}
         </tr>
         <tr>
-          <td id="td1" width="150px">Số lượng chỗ ngồi:</td>
-          <td id="td2"></td>
+          {% if number_Seat %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Số lượng ghế: {{number_Seat}}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
         </tr>
         <tr>
           {% if number_chair %}
           <div class="col-sm-9 text-secondary">
-            <td id="td1">Mã ghế:{{number_chair}}</td>
+            <td id="td1">Mã ghế:{{number_chair}}, A6</td>
           </div>
           {%else%}
           <div class="col-sm-9 text-secondary">
@@ -77,6 +84,19 @@
           </div>
           {% endif %}
         </tr>
+        {% comment %}
+        <tr>
+          {% if number_chair2 %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">mã{{number_chair2}}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        {% endcomment %}
       </table>
       <hr />
     </div>
