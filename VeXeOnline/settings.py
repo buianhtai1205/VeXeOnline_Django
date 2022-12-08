@@ -82,11 +82,10 @@ WSGI_APPLICATION = 'VeXeOnline.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vexeonline',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'default',
+        'USER': 'django',
+        'PASSWORD': '64846',
     }
 }
 
