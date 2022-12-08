@@ -21,9 +21,64 @@
     {% include 'managers/sidebar.html' %}
     
 	<section class="home">
+		<div class="text">Thông tin nhà xe</div>
+		<div class="content">
+			<table class="table table-striped table-hover">
+				<thead>
+				    <tr>
+				      <th scope="col">Tên nhà xe</th>
+				      <th scope="col">Mô tả</th>
+				      <th scope="col">Địa chỉ</th>
+                      <th scope="col">Thao tác</th>
+				    </tr>
+		  		</thead>
+			  	<tbody>
+					<tr>
+						<th scope="col">{{ garage.fullName }}</th>
+						<th scope="col">{{ garage.description }}</th>
+						<th scope="col">{{ garage.address }}</th>
+						<th>
+							<a href="manager/edit/garage/">Cập nhật</a>
+						</th>
+					  </tr>
+			  	</tbody>
+			</table>
+		</div>
+		<div class="text">Danh sách lịch trình</div>
+		<div class="area-feat">
+			<a class="btn btn-success" href="/manager/add/schedule/">Thêm lịch trình</a>
+		</div>
+		<div class="content">
+			<table class="table table-striped table-hover">
+				<thead>
+				    <tr>
+				      <th scope="col">Mã nơi dừng chân</th>
+                      <th scope="col">Nơi dừng chân</th>
+                      <th scope="col">Điểm gần với</th>
+				      <th>Xóa</th>
+				    </tr>
+		  		</thead>
+            {% for x in listSchedules %}
+            	<tbody>
+					<tr>
+						<th scope="col">{{ x.id }}</th>
+						<th scope="col">{{ x.musty }}</th>
+						{% if x.status == 0 %}
+						<th scope="col">{{ trip.destination }}</th>
+                		{% endif %}
+						{% if x.status == 1 %}
+						<th scope="col">{{ trip.departure }}</th>
+                		{% endif %}
+						<th>
+							<a href="manager/delete/schedule/{{ x.id }}">Xóa</a>
+						</th>
+			  	</tbody>
+            {% endfor %}
+		</table>
+        </div>  
 		<div class="text">Danh Sách Chuyến Xe</div>
 		<div class="area-feat">
-			<a class="btn btn-success" href="#">Thêm chyến xe</a>
+			<a class="btn btn-success" href="manager/add/">Thêm chyến xe</a>
 		</div>
 		<div class="content">
 			<div style="width: 50%;" class="d-flex">
@@ -39,15 +94,34 @@
 				      <th scope="col">Điểm khởi hành</th>
 				      <th scope="col">Điểm đến</th>
                       <th scope="col">Thời gian khởi hành</th>
-                      <th scope="col">Số lượng ghế</th>
+                      <th scope="col">Số ghế</th>
                       <th scope="col">Giá</th>
-                      <th scope="col">Hãng</th>
+                      <th scope="col">Xem</th>
 				      <th>Cập nhật</th>
 				      <th>Xóa</th>
 				    </tr>
 		  		</thead>
 			  	<tbody>
-			  	
+					{% for x in listTrips %}
+					<tr>
+						<th scope="col">{{ x.id }}</th>
+						<th scope="col">{{ x.id }}</th>
+						<th scope="col">{{ x.departure }}</th>
+						<th scope="col">{{ x.destination }}</th>
+						<th scope="col">{{ x.departure_time }}</th>
+						<th scope="col">{{ x.num_seat }}</th>
+						<th scope="col">{{ x.price }}đ</th>
+						<th scope="col">
+							<a href="manager/view/trip/{{ x.id }}">Xem</a>
+						</th>
+						<th>
+							<a href="manager/edit/trip/{{ x.id }}">Cập nhật</a>
+						</th>
+						<th>
+							<a href="manager/delete/trip/{{ x.id }}">Xóa</a>
+						</th>
+					  </tr>
+					{% endfor %}
 			  	</tbody>
 			</table>
 		</div> 

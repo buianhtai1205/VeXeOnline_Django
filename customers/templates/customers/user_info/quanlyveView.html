@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'customers/css/chitietve.css' %}"
+    />
+  </head>
+  <body>
+    <div id="chitietve" class="bg" style="width: 500px; background: #0090d5">
+      <h1 align="center">Chi tiết đặt chỗ</h1>
+      <hr />
+      <table>
+        <tr>
+          {% if fullnameGarage %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1" style="width: 200px">Công ty: {{fullnameGarage}}</td>
+            <td id="td2">Mô tả: {{description}}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if departure %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Điểm đón: {{ departure }}</td>
+            <td id="td2">Điểm trả: {{ destination }}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if departure_time %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Giờ khởi hành: {{ departure_time }}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+
+        <tr>
+          {% if price %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Giá vé: {{price}}.000đ</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if number_Seat %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Số lượng ghế: {{number_Seat}}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if number_chair %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">Mã ghế:{{number_chair}}, A6</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        {% comment %}
+        <tr>
+          {% if number_chair2 %}
+          <div class="col-sm-9 text-secondary">
+            <td id="td1">mã{{number_chair2}}</td>
+          </div>
+          {%else%}
+          <div class="col-sm-9 text-secondary">
+            <p></p>
+          </div>
+          {% endif %}
+        </tr>
+        {% endcomment %}
+      </table>
+      <hr />
+    </div>
+  </body>
+</html>

@@ -32,8 +32,134 @@
     <link rel="stylesheet" href="{% static 'customers/css/ve16.css' %}">
     <link rel="stylesheet" href="{% static 'customers/css/timve.css' %}">
     <link rel="stylesheet" href="{% static 'customers/css/datvexe.css' %}">
+    <link rel="stylesheet" href="{% static 'customers/css/seatSelect.css' %}">
     {% comment %}
     <link rel="stylesheet" href="{% static 'customers/css/listCoachSearch.css' %}"> {% endcomment %}
+    <style>
+        .invalid {
+            border-color: red !important;
+        }
+        
+        #error {
+            color: red
+        }
+        
+        #error2 {
+            color: red
+        }
+    </style>
+
+    <script type="text/javascript">
+        const nextBtn = document.querySelectorAll(".btnNext");
+        const prevBtn = document.querySelectorAll(".btnPrevious");
+            var btnNext = (n,index=0) => {
+                   let id1 = index;
+                    let id2 = index + 1;
+                    let tabElement2 = document.querySelectorAll("#pills-tab" + n + " li a")[id2];
+                    var lastTab = new bootstrap.Tab(tabElement2);
+                    lastTab.show();
+                    console.log(n)
+    
+            }
+
+        var btnPrevious = (n,index=0) => {
+            let id = index;
+            let id2 = index - 1;
+            let tabElement = document.querySelectorAll("#pills-tab" + n +" li a")[id];
+            var lastTab = new bootstrap.Tab(tabElement);
+            lastTab.show();
+            console.log(n)
+        }
+
+        var goBack2 = (n) => {
+            var disabled2 = document.querySelector(`.nav-link_3`);
+            if (disabled2.classList.contains('disabled')) {
+                disabled2.classList.remove('disabled');
+            }
+
+        }
+        /* nextTab */
+     
+
+        nextBtn.forEach(function (item, index) {
+
+            item.addEventListener('click', function () {
+                let id1 = index;
+                let id2 = index + 1;
+                let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2];
+                var lastTab = new bootstrap.Tab(tabElement2);
+                lastTab.show();
+            });
+        });
+
+        prevBtn.forEach(function (item, index) {
+            item.addEventListener('click', function () {
+                let id = index;
+                let id2 = index - 1;
+                let tabElement = document.querySelectorAll("#pills-tab2 li a")[id];
+                var lastTab = new bootstrap.Tab(tabElement);
+                lastTab.show();
+            });
+        });
+
+        /* //check validatate */
+
+        var input1 = document.getElementById("inputName");
+        var input2 = document.getElementById("inputPhone");
+        var input3 = document.getElementById("inputEmail");
+
+        var error2 = document.getElementById("error2");
+        input1.onblur = function () {
+            if (input1.value.length == 0) {
+                input1.classList.add('invalid');
+                error1.innerHTML = 'Please enter a correct first name and last name.'
+            }
+        };
+
+        input1.onfocus = function () {
+            input1.classList.remove('invalid');
+            error1.innerHTML = "";
+        };
+
+        function validatePhoneNumber(input_str) {
+            var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+            return re.test(input_str);
+        }
+
+
+        input2.onblur = function () {
+            if (!validatePhoneNumber(input2.value)) {
+                input2.classList.add('invalid');
+                error2.innerHTML = 'Please enter a correct number phone.';
+                /* 				error2.innerText = 'Please enter a correct number phone.'; */
+                /* 				console.log(error2) */
+            }
+        };
+
+        input2.onfocus = function () {
+            if (this.classList.contains('invalid2')) {
+                this.classList.remove('invalid2');
+                error2.innerHTML = "";
+            }
+        };
+
+
+        input3.onblur = function () {
+            if (input3.value.length === 0) {
+                input3.classList.add('invalid');
+                error3.innerHTML = 'Please enter a correct email.'
+            }
+        };
+
+        input3.onfocus = function () {
+            if (this.classList.contains('invalid')) {
+                this.classList.remove('invalid');
+                error3.innerHTML = "";
+            }
+        };
+
+    </script>
 </head>
 
 <body>
@@ -345,7 +471,7 @@
                 </div>
 
                 <div class="col-8">
-                    <div class="mid__right animate__animated animate__fadeInRight animate__delay-1s">
+                    
                         <!-- <h2>Đặt mua vé xe đi Đắk Lắk từ Sài Gòn chất lượng cao và giá vé ưu đãi nhất: 296 chuyến</h2>
                         <div class="flash__sale">
                             <img class="animate__animated animate__fadeInRight animate__delay-1s"
@@ -360,7 +486,6 @@
 
 
 
-                        <div class="project__content">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <span>Sắp xếp theo:</span>
                                 <li class="nav-item" role="presentation">
@@ -381,10 +506,8 @@
                                 </li>
                             </ul>
 
-                            <div class="tab-content" id="pills-tabContent">
                                 {% for item in list_trip %}
-                                <form action="#" method="POST" style="margin-bottom: 16px!important;">
-                                    {% csrf_token %}
+                                <div id="{{ item.id }}">
                                     <div class="tab-pane fade show active" id="all" role="tabpanel"
                                         aria-labelledby="pills-home-tab" aria-labelledby="pills-home-tab">
                                         <div class="vexe">
@@ -399,64 +522,63 @@
                                                             <p class="content__1">{{ item.price }}.000 VNĐ</p>
                                                         </div>
                                                         <p>Giường nằm {{ item.num_seat }} chỗ</p>
-                                                        <i class="fa fa-map-pin">6h30P</i>
+                                                        <i class="fa fa-map-pin">{{ item.departure_time|date:'H:i' }}</i>
                                                         <br> 
-                                                        <i class="fa fa-map-marker-alt">18h30P</i>
+                                                        <i class="fa fa-map-marker-alt"></i>
                                                     </div>
-
                                                 </div>
                                                 <div class="collasp">
                                                     <div class="card__link">
-                                                        <a data-toggle="collapse" href="#collapseExample" role="button"
-                                                            aria-expanded="false" aria-controls="collapseExample">
+                                                        <a data-toggle="collapse" href="#collapseExample{{ item.id }}_id" role="button"
+                                                            aria-expanded="false" aria-controls="collapseExample{{ item.id }}">
                                                             Thông tin chi tiết <i class="fa fa-angle-down"></i>
                                                         </a>
                                                     </div>
                                                     <div class="button">
                                                         <button data-toggle="collapse"
-                                                            onclick="chonXe('#scroll1<%=1%>',800,'chuyendi',1,1)"
-                                                            data-target="#collapseChonChuyen" aria-expanded="false"
-                                                            aria-controls="collapseChonChuyen" name="idChuyenXe"
-                                                            value="2" type="button">Chọn chuyến</button>
-                                                        <input class="form-check-input" type="hidden" value="2"
+                                                            onclick="chonXe('',800,'chuyendi',{{ item.id }},{{ item.id }})"
+                                                            data-target="#collapseChonChuyen{{ item.id }}" aria-expanded="false"
+                                                            aria-controls="collapseChonChuyen{{ item.id }}" name="idChuyenXe"
+                                                            value="{{ item.id }}" type="button">Chọn chuyến</button>
+                                                        <input class="form-check-input" type="hidden" value="{{ item.id }}"
                                                             name="inputIdChuyenXe" id="inputIdChuyenXe">
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <!-- cardbottom1 -->
-                                            <div class="card__bottom">
-                                                <div class="collapse" id="collapseExample">
+                                            <!-- cardbottom-hinhanh -->
+                                          <div class="card__bottom">
+                                                <div class="collapse" id="collapseExample{{ item.id }}_id">
                                                     <div class="card card-body">
                                                         <div class="project">
                                                             <ul class="nav nav-pills mb-3" id="pills-tab"
                                                                 role="tablist">
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link active" id="pills-img-tab"
-                                                                        data-toggle="pill" href="#img" role="tab"
+                                                                        data-toggle="pill" href="#img{{ item.id}}_id" role="tab"
                                                                         aria-controls="pills-img"
                                                                         aria-selected="true">Hình
                                                                         ảnh</a></li>
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link" id="pills-cmt-tab"
-                                                                        data-toggle="pill" href="#pills-cmt" role="tab"
+                                                                        data-toggle="pill" href="#pills-cmt{{ item.id}}_id" role="tab"
                                                                         aria-controls="pills-cmt"
                                                                         aria-selected="false">Tiện ích </a></li>
                                                                 <li class="nav-item" role="presentation"><a
                                                                         class="nav-link" id="pills-travel-tab"
-                                                                        data-toggle="pill" href="#pills-travel"
+                                                                        data-toggle="pill" href="#pills-travel{{ item.id}}_id"
                                                                         role="tab" aria-controls="pills-travel"
                                                                         aria-selected="false">Điểm
                                                                         Đón Trả</a></li>
 
                                                             </ul>
 
-                                                            <div class="tab-content" id="pills-tabContent">
-                                                                <div class="tab-pane fade show active" id="img"
+                                                            <div class="tab-content" id="pills-tabContent{{ item.id}}">
+                                                                <div class="tab-pane fade show active" id="img{{ item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-img-tab">
                                                                 </div>
 
-                                                                <div class="tab-pane fade" id="pills-cmt"
+                                                                <div class="tab-pane fade" id="pills-cmt{{item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-cmt-tab">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -524,7 +646,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="tab-pane fade" id="pills-travel"
+                                                                <div class="tab-pane fade" id="pills-travel{{item.id}}_id"
                                                                     role="tabpanel" aria-labelledby="pills-travel-tab">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -588,7 +710,6 @@
                                                                                             <p>17:50 • Văn Phòng Đắk
                                                                                                 Lắk</p>
                                                                                         </div>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -599,27 +720,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
                                         <div class="card__bottom">
-                                            <div class="collapse" id="collapseChonChuyen">
+                                        <form action="/datve" method="POST" style="margin-bottom: 16px!important;" id="{{ item.id } + 1}">
+                                            <div class="collapse" id="collapseChonChuyen{{ item.id }}">
                                                 <div class="card card-body">
                                                     <div class="project">
-                                                        <ul class="nav nav-pills mb-3 nav-tabs" id="pills-tab2"
+                                                        <ul class="nav nav-pills mb-3 nav-tabs" id="pills-tab{{ item.id }}"
                                                             role="tablist">
                                                             <li class="nav-item " role="presentation"><a
                                                                     class="nav-link active nav-link_1"
-                                                                    id="pills-img-tab2" data-toggle="pill" href="#img2"
+                                                                    id="pills-img-tab{{ item.id }}" data-toggle="pill" href="#img{{ item.id }}"
                                                                     role="tab" aria-controls="pills-img"
-                                                                    aria-selected="true"><input class="form-check-input"
+                                                                    aria-selected="true">
+                                                                    <input class="form-check-input"
                                                                         type="hidden" name="inlineRadioOptions"
-                                                                        id="inlineRadio1" value="option1"> <label
+                                                                        id="inlineRadio{{ item.id }}" value="option{{ item.id }}">
+                                                                         <label
                                                                         class="form-check-label line-connect"
-                                                                        for="inlineRadio1">1.Chỗ
+                                                                        for="inlineRadio{{ item.id }}">1.Chỗ
                                                                         mong muốn -></label></a></li>
                                                             <li class="nav-item" role="presentation"><a
-                                                                    class="nav-link nav-link_2" id="pills-cmt-tab2"
-                                                                    data-toggle="pill" href="#pills-cmt2" role="tab"
+                                                                    class="nav-link nav-link_{{ item.id }}" id="pills-cmt-tab{{ item.id }}"
+                                                                    data-toggle="pill" href="#pills-cmt{{ item.id }}" role="tab"
                                                                     aria-controls="pills-cmt"
                                                                     aria-selected="false"><input
                                                                         class="form-check-input" type="hidden"
@@ -628,8 +752,8 @@
                                                                         for="inlineRadio2">2.Điểm đón trả -></label>
                                                                 </a></li>
                                                             <li class="nav-item " role="presentation"><a
-                                                                    class="nav-link nav-link_3" id="pills-travel-tab3"
-                                                                    data-toggle="pill" href="#pills-travel3" role="tab"
+                                                                    class="nav-link nav-link_{{ item.id }}" id="pills-travel-tab{{ item.id }}"
+                                                                    data-toggle="pill" href="#pills-travel{{ item.id }}" role="tab"
                                                                     aria-controls="pills-travel"
                                                                     aria-selected="false"><input
                                                                         class="form-check-input" type="hidden"
@@ -640,30 +764,220 @@
 
                                                         </ul>
                                                         <div class="tab-content" id="pills-tabContent">
-                                                            <div class="tab-pane fade show active" id="img2"
-                                                                role="tabpanel" aria-labelledby="pills-img-tab2">
-                                                                {% include 'customers/seatSelect.html' %}
+                                                            <div class="tab-pane fade show active" id="img{{ item.id }}"
+                                                                role="tabpanel" aria-labelledby="pills-img-tab{{ item.id }}">
                                                                 
+                                                                <div class="SeatSelectionOnline__SeatSelection-sc-167eirc-0 hqRXwu">
+                                                                    <div class="seat-groups">
+                                                                      <div class="note">Chú thích</div>
+                                                                      <div class="seat-info">
+                                                                        <div
+                                                                          class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 oWlko seat-thumbnail"
+                                                                          color="#b8b8b8"
+                                                                        >
+                                                                          <svg
+                                                                            width="32"
+                                                                            height="40"
+                                                                            viewBox="0 0 28 40"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                          >
+                                                                            <rect
+                                                                              x="2.75"
+                                                                              y="2.75"
+                                                                              width="22.5"
+                                                                              height="34.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <rect
+                                                                              x="5.75"
+                                                                              y="27.75"
+                                                                              width="16.5"
+                                                                              height="6.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <path
+                                                                              class="icon-selected"
+                                                                              d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                            <path
+                                                                              class="icon-disabled"
+                                                                              d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                          </svg>
+                                                                        </div>
+                                                                        <span class="seat-name">Còn trống</span>
+                                                                      </div>
+                                                                      <div class="seat-info">
+                                                                        <div
+                                                                          class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 daMVvn seat-thumbnail"
+                                                                          disabled=""
+                                                                        >
+                                                                          <svg
+                                                                            width="32"
+                                                                            height="40"
+                                                                            viewBox="0 0 28 40"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                          >
+                                                                            <rect
+                                                                              x="2.75"
+                                                                              y="2.75"
+                                                                              width="22.5"
+                                                                              height="34.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <rect
+                                                                              x="5.75"
+                                                                              y="27.75"
+                                                                              width="16.5"
+                                                                              height="6.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <path
+                                                                              class="icon-selected"
+                                                                              d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                            <path
+                                                                              class="icon-disabled"
+                                                                              d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                          </svg>
+                                                                        </div>
+                                                                        <span class="seat-name">Ghế đã bán</span>
+                                                                      </div>
+                                                                      <div class="seat-info">
+                                                                        <div
+                                                                          class="SeatThumbnail__SeatContainer-sc-1ooosi9-0 dLgsTe seat-thumbnail"
+                                                                        >
+                                                                          <svg
+                                                                            width="32"
+                                                                            height="40"
+                                                                            viewBox="0 0 28 40"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                          >
+                                                                            <rect
+                                                                              x="2.75"
+                                                                              y="2.75"
+                                                                              width="22.5"
+                                                                              height="34.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <rect
+                                                                              x="5.75"
+                                                                              y="27.75"
+                                                                              width="16.5"
+                                                                              height="6.5"
+                                                                              rx="2.25"
+                                                                              fill="#FFF"
+                                                                              stroke="#B8B8B8"
+                                                                              stroke-width="1.5"
+                                                                              stroke-linejoin="round"
+                                                                            ></rect>
+                                                                            <path
+                                                                              class="icon-selected"
+                                                                              d="M14 8.333A6.67 6.67 0 0 0 7.333 15 6.67 6.67 0 0 0 14 21.667 6.67 6.67 0 0 0 20.667 15 6.669 6.669 0 0 0 14 8.333zm-1.333 10L9.334 15l.94-.94 2.393 2.387 5.06-5.06.94.946-6 6z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                            <path
+                                                                              class="icon-disabled"
+                                                                              d="M18.96 11.46l-1.42-1.42L14 13.59l-3.54-3.55-1.42 1.42L12.59 15l-3.55 3.54 1.42 1.42L14 16.41l3.54 3.55 1.42-1.42L15.41 15l3.55-3.54z"
+                                                                              fill="transparent"
+                                                                            ></path>
+                                                                          </svg>
+                                                                        </div>
+                                                                        <span class="seat-name">Đang chọn</span>
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="SeatTemplate-sc-1ilqewh-0 llUipg seat-template">
+                                                                      <div class="coach-container">
+                                                                        <div class="coach">
+                                                                          <table>
+                                                                            <tbody>
+                                                                              <tr class="coach-row">
+                                                                                <td class="seat">
+                                                                                  <div
+                                                                                    class="Seat__SeatContainer-sc-6hr0u8-0 buebkj seat-container"
+                                                                                    data-disabled="true"
+                                                                                    disabled=""
+                                                                                  >
+                                                                                    <svg
+                                                                                      width="24"
+                                                                                      height="24"
+                                                                                      viewBox="0 0 24 24"
+                                                                                      fill="none"
+                                                                                      xmlns="http://www.w3.org/2000/svg"
+                                                                                    >
+                                                                                      <path
+                                                                                        d="M12.305 24h-.61c-.035-.004-.07-.01-.105-.012a11.783 11.783 0 0 1-2.117-.261 12.027 12.027 0 0 1-6.958-4.394A11.933 11.933 0 0 1 .027 12.78L0 12.411v-.822c.005-.042.013-.084.014-.127a11.845 11.845 0 0 1 1.102-4.508 12.007 12.007 0 0 1 2.847-3.852A11.935 11.935 0 0 1 11.728.003c.947-.022 1.883.07 2.81.27 1.22.265 2.369.71 3.447 1.335a11.991 11.991 0 0 1 3.579 3.164 11.876 11.876 0 0 1 2.073 4.317c.178.712.292 1.434.334 2.168.008.146.02.292.029.439v.609c-.004.03-.011.06-.012.089a11.81 11.81 0 0 1-1.05 4.521 12.02 12.02 0 0 1-1.92 2.979 12.046 12.046 0 0 1-6.395 3.812c-.616.139-1.24.23-1.872.265-.149.008-.297.02-.446.03zm8.799-13.416c-.527-3.976-4.078-7.808-9.1-7.811-5.02-.003-8.583 3.823-9.11 7.809h.09c.64-.035 1.278-.092 1.912-.195.815-.131 1.614-.326 2.378-.639.625-.255 1.239-.54 1.855-.816.82-.368 1.673-.593 2.575-.62a7.123 7.123 0 0 1 1.947.187c.585.146 1.136.382 1.68.634.57.264 1.14.526 1.733.736 1.2.424 2.442.62 3.706.7.11.006.222.01.334.015zm-10.95 10.471v-.094c0-1.437 0-2.873-.002-4.31 0-.141-.011-.284-.035-.423a2.787 2.787 0 0 0-.775-1.495c-.564-.582-1.244-.896-2.067-.892-1.414.007-2.827.002-4.24.002h-.09a9.153 9.153 0 0 0 3.125 5.256 9.15 9.15 0 0 0 4.083 1.956zm3.689.001c1.738-.36 3.25-1.137 4.528-2.355 1.4-1.334 2.287-2.956 2.685-4.855l-.077-.003h-4.362c-.237 0-.47.038-.695.112-.667.22-1.188.635-1.588 1.206a2.673 2.673 0 0 0-.494 1.59c.008 1.4.003 2.801.003 4.202v.103zM12.05 14.22c1.215-.035 2.204-1.083 2.165-2.275-.039-1.223-1.095-2.215-2.29-2.166-1.211.05-2.2 1.108-2.15 2.302.051 1.191 1.108 2.186 2.275 2.139z"
+                                                                                        fill="#858585"
+                                                                                      ></path>
+                                                                                    </svg>
+                                                                                  </div>
+                                                                                </td>
+                                                                              </tr>
+                                                                              {% with trip_id=item.id %}
+                                                                              {% for data in detail %}
+                                                                                {% if data.trip_id == trip_id %}
+                                                                                  {% if item.num_seat == 16 %}
+                                                                                    {% include 'customers/list_16_seat.html' %}
+                                                                                  {% endif %}
+                                                                                  {% if item.num_seat == 24 %}
+                                                                                    {% include 'customers/list_24_seat.html' %}
+                                                                                  {% endif %}
+                                                                                {% endif %}
+                                                                              {% endfor %}
+                                                                              {% endwith %}
+                                                                            </tbody>
+                                                                          </table>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div id="seat_result"></div>                                              
                                                                 <div style="border-top: 1px solid;">
-
                                                                     <div class="line"
                                                                         style="display: block; border-bottom: 10px;">
                                                                     </div>
                                                                     <div
                                                                         style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                                                                        <p
+                                                                        {% comment %} <p
                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 5px;">
-                                                                            Tổng
-                                                                            cộng: 0đ</p>
+                                                                            {{ item.price }}.000 VNĐ</p> {% endcomment %}
                                                                         <button type="button"
-                                                                            class="btn btn-primary btnNext">Tiếp
+                                                                            class="btn btn-primary btnNext" onclick="btnNext({{item.id }},0)">Tiếp
                                                                             tục</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="tab-pane fade" id="pills-cmt2" role="tabpanel"
-                                                                aria-labelledby="pills-cmt-tab2">
+                                                            <div class="tab-pane fade" id="pills-cmt{{ item.id }}" role="tabpanel"
+                                                                aria-labelledby="pills-cmt-tab{{ item.id }}" novalidate>
                                                                 <div class="row">
                                                                     <div class="row">
                                                                         <div class="col-12">
@@ -680,60 +994,35 @@
                                                                                         <div class="card__right1">
                                                                                             <h6>Điểm đón</h6>
                                                                                             <ul>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="1"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:30 • Bãi
-                                                                                                        Xe Thành
-                                                                                                        Thái
+                                                                                              {% for data in detail %}
+                                                                                              {% if data.trip_id == item.id %}
+                                                                                                {% if item.departure == item.garage.address %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                    {% if place.status == 0 %}
+                                                                                                    <li class="form-check" style="display: flex">
+                                                                                                    <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox"
+                                                                                                        value="{{ place.id }}" >
+                                                                                                    <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
+                                                                                                      {{ place.musty }}
                                                                                                     </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="2"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:40 • Lý
-                                                                                                        Thường Kiệt
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox1"
-                                                                                                        id="checkbox1"
-                                                                                                        value="3"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios1"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:50 • Cây
-                                                                                                        xăng mũi tàu
-                                                                                                        Trường
-                                                                                                        Chinh</label>
-                                                                                                </li>
-
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% else %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                  {% if place.status == 1 %}
+                                                                                                  <li class="form-check" style="display: flex">
+                                                                                                  <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox"
+                                                                                                      value="{{ place.id }}" >
+                                                                                                  <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
+                                                                                                    {{ place.musty }}
+                                                                                                  </label>
+                                                                                                  </li>
+                                                                                                  {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% endif %}
+                                                                                              {% endif %}
+                                                                                              {% endfor %}
                                                                                             </ul>
                                                                                         </div>
 
@@ -741,59 +1030,35 @@
                                                                                             <h6>Điểm trả</h6>
 
                                                                                             <ul>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="4"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        style="font-size: 16px"
-                                                                                                        for="exampleRadios2">
-                                                                                                        06:30 • Bãi
-                                                                                                        Xe Thành
-                                                                                                        Thái
+                                                                                              {% for data in detail %}
+                                                                                              {% if data.trip_id == item.id %}
+                                                                                                {% if item.departure == item.garage.address %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                    {% if place.status == 1 %}
+                                                                                                    <li class="form-check" style="display: flex">
+                                                                                                    <input class="form-check-input" type="checkbox" name="_checkbox" id="_checkbox"
+                                                                                                        value="{{ place.id }}" >
+                                                                                                    <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
+                                                                                                      {{ place.musty }}
                                                                                                     </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="5"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios2"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:40 • Lý
-                                                                                                        Thường Kiệt
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                <li class="form-check"
-                                                                                                    style="display: flex">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="checkbox4"
-                                                                                                        id="checkbox4"
-                                                                                                        value="6"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="exampleRadios2"
-                                                                                                        style="font-size: 16px">
-                                                                                                        06:50 • Cây
-                                                                                                        xăng mũi tàu
-                                                                                                        Trường
-                                                                                                        Chinh</label>
-                                                                                                </li>
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% else %}
+                                                                                                  {% for place in data.list_musty %}
+                                                                                                  {% if place.status == 0 %}
+                                                                                                  <li class="form-check" style="display: flex">
+                                                                                                    <input class="form-check-input" type="checkbox" name="_checkbox" id="_checkbox"
+                                                                                                    value="{{ place.id }}" >
+                                                                                                <label class="form-check-label"  for="exampleRadios" style="font-size: 16px">
+                                                                                                  {{ place.musty }}
+                                                                                                  </label>
+                                                                                                  </li>
+                                                                                                  {% endif %}
+                                                                                                  {% endfor %}
+                                                                                                {% endif %}
+                                                                                              {% endif %}
+                                                                                              {% endfor %}
                                                                                             </ul>
                                                                                         </div>
 
@@ -807,14 +1072,14 @@
                                                                                 <div
                                                                                     style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px;">
                                                                                     <button type="button"
-                                                                                        class="btn btn-secondary btnPrevious">Quay
+                                                                                        class="btn btn-secondary " onclick="btnPrevious({{item.id }},0)">Quay
                                                                                         lại</button>
                                                                                     <div style="display: flex;">
-                                                                                        <p
+                                                                                        {% comment %} <p
                                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 10px;">
                                                                                             Tổng
-                                                                                            cộng: 0đ</p>
-                                                                                        <button type="button" class="btn btn-primary btnNext" >
+                                                                                            cộng: {{item.price }}.000đ</p> {% endcomment %}
+                                                                                        <button type="button" class="btn btn-primary btnNext" onclick="btnNext({{ item.id }},1)" >
                                                                                             Tiếp tục
                                                                                         </button>
                                                                                     </div>
@@ -826,8 +1091,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="tab-pane fade" id="pills-travel3"
-                                                                role="tabpanel" aria-labelledby="pills-travel-tab3">
+                                                            <div class="tab-pane fade" id="pills-travel{{ item.id }}"
+                                                                role="tabpanel" aria-labelledby="pills-travel-tab{{ item.id }}">
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <div
@@ -840,8 +1105,8 @@
                                                                                 <div>
                                                                                     <div class="form-group ">
                                                                                         <input type="text" class="form-control top"
-                                                                                            id="inputName" placeholder="First and Last name "
-                                                                                            name="nameUser" value="" required>
+                                                                                            id="inputName{{ item.id }}" placeholder="First and Last name "
+                                                                                            name="nameUser{{ item.id }}" value="">
                                                                                        
                                                                                         <div>
                                                                                             <p id="error1"></p>
@@ -849,32 +1114,38 @@
                                                                                     </div>
 
                                                                                     <div class="form-group ">
-                                                                                        <input type="text"
-                                                                                            class="form-control top inputPhone1"
-                                                                                            id="inputPhone" placeholder="Number phone "
-                                                                                            name="phoneUser" value="" required>
-                                                                                           >
-                                                                                        <p id="error2"></p>
+                                                                                        <input
+                                                                                        type="text"
+                                                                                        class="form-control top"
+                                                                                        id="input{{ item.id }}"
+                                                                                        aria-describedby="phoneHelp"
+                                                                                        placeholder="Phone number"
+                                                                                        name="phoneUser{{ item.id }}"
+                                                                                        pattern="[0-9]{10}"
+                                                                                        value=""
+                                                                                      />
+                                                                                            {% comment %} <div>
+                                                                                                <p id="error2"></p>
+                                                                                            </div> {% endcomment %}
                                                                                     </div>
 
-                                                                                    <div class="form-group ">
-                                                                                       
+                                                                                    <div class="form-group ">                                                                                    
                                                                                         <input type="text"
                                                                                             class="form-control top"
-                                                                                            id="inputEmail"
+                                                                                            id="inputEmail{{ item.id }}"
                                                                                             placeholder="Email (abc@gmail.com)"
-                                                                                            name="emailUser" value="" required>
-                                                                                        <div>
+                                                                                            name="emailUser{{ item.id }}" value="" >
+                                                                                        {% comment %} <div>
                                                                                             <p id="error3"></p>
-                                                                                        </div>
+                                                                                        </div> {% endcomment %}
                                                                                     </div>
                                                                                     <div class="form-group ">
                                                                                         <input type="text"
                                                                                             class="form-control top"
-                                                                                            id="inputOther"
+                                                                                            id="inputOther{{ item.id }}"
                                                                                             aria-describedby="otherHelp"
                                                                                             placeholder="Note"
-                                                                                            name="noteUser" value="">
+                                                                                            name="noteUser{{ item.id }}" >
                                                                                         <!-- <div>
                                                                                             <p id="error4"></p>
                                                                                         </div> -->
@@ -883,14 +1154,6 @@
                                                                                             Tục</b>, bạn đồng ý với
                                                                                         Chính sách bảo mật thông tin
                                                                                         và Quy chế</p>
-                                                                                    <!-- <div class="form-group form-check content">
-                                                                                        <input type="checkbox" class="form-check-input"
-                                                                                            id="exampleCheck1" name="rememberMe" value="Y">
-                                                                                        <label class="form-check-label" for="exampleCheck1">Remember</label>
-                                                                                        <a class="forgot" href="login"
-                                                                                            style="text-decoration: none;">Forgot password</a>
-                                                                                    </div>
-                                                                                    <button class="button3" type="submit">Login</button> -->
                                                                                 </div>
                                                                             </div>
                                                                             <div style="border-top: 1px solid;">
@@ -900,20 +1163,19 @@
                                                                                 <div
                                                                                     style="display: flex; align-items: center; justify-content: space-between;">
                                                                                     <button type="button"
-                                                                                        class="btn btn-secondary btnPrevious"
-                                                                                        style="margin-top: 20px">Quay
+                                                                                        class="btn btn-secondary "
+                                                                                        style="margin-top: 20px" onclick="btnPrevious({{ item.id }},1)">Quay
                                                                                         lại</button>
                                                                                     <div
                                                                                         style="display: flex; margin-top: 10px;">
                                                                                         <p
                                                                                             style="margin-right: 16px; margin-bottom: 0; margin-top: 5px;">
                                                                                             Tổng
-                                                                                            cộng: 0đ</p>
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Xác
-                                                                                            nhận</button>
-                                                                                    </div>
-
+                                                                                            cộng: {{item.price}}.000đ</p>
+                                                                                        </div>
+                                                                                        <button type="submit" id="{{ item.id }}"
+                                                                                            class="btn btn-primary {{ item.id }}">Xác
+                                                                                            nhận </button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -923,15 +1185,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <form>
                                         </div>
                                     </div>
-                                </form>
-                                {% endfor %}
+                                </div>
                                 
-                            </div>
+                                {% endfor %}
 
-                        </div>
-                    </div>
                 </div>
             </div>
     </section>
@@ -956,163 +1216,47 @@
 
 
 
-    <!-- SLICK -->
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
-        $('.multiple-items').slick({
-            infinite: true,
-            arrows: false,
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 2000,
-        });
-    </script> 
-
-    <script>
-        $('.slider-for').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: '.slider-nav'
-        });
-        $('.slider-nav').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            asNavFor: '.slider-for',
-            dots: true,
-            centerMode: true,
-            focusOnSelect: true
-        })
-    </script> -->
-
-    <!-- tinhtien -->
     <script src="{% static 'customers/js/tinhtien.js' %}"></script>
-    <script type="text/javascript">
-        var onClick = (n) => {
-            /* var disabled2= document.querySelector(`.nav-link_1`);
-            disabled2.classList.add('disabled');  */
-
+    
+    <script>
+        var count = 0;
+      
+        function clickSeatFunction(seat_id) {
+          let seat = document.getElementsByClassName(seat_id);
+          let seat_result = document.getElementById("seat_result");
+          if (seat[0].classList[3] != "ArHJS")
+          {
+            if (seat[0].classList[4] == null) {
+            count++;
+            
+              if (count < 4)
+              {
+                seat[0].classList.add("cUIhrn");
+                let seatItem = document.createElement("input");
+                let name = "seatID" + count.toString();
+                seatItem.setAttribute("id", name);
+                seatItem.setAttribute("name", name);
+                seatItem.setAttribute("value", seat_id);
+                seatItem.setAttribute('hidden', true);
+                seat_result.appendChild(seatItem);
+              } else {
+                  alert(
+                "Bạn được chọn tối đa 3 ghế! Xin thông cảm vì sự bất tiện này. Nếu bạn muốn đặt nhiều hơn, Vui lòng liên hệ trực tiếp với thu ngân qua số điện thoại của hãng."
+              );
+              count--;
+              }
+            
+            } else {
+              seat[0].classList.remove("cUIhrn");
+              id = "seatID" + count.toString();
+              let seatItem = document.getElementById(id);
+              seatItem.parentNode.removeChild(seatItem);
+              count--;
+            }
+          }
+          
         }
-
-        var onClick2 = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_2`);
-            disabled2.classList.add('disabled');
-
-        }
-
-        var onClick3 = (n) => {
-            /* var disabled2= document.querySelector(`.nav-link_3`);
-            disabled2.classList.add('disabled');  */
-
-        }
-
-        var goBack = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_2`);
-            if (disabled2.classList.contains('disabled')) {
-                disabled2.classList.remove('disabled');
-            }
-
-        }
-
-        var goBack2 = (n) => {
-            var disabled2 = document.querySelector(`.nav-link_3`);
-            if (disabled2.classList.contains('disabled')) {
-                disabled2.classList.remove('disabled');
-            }
-
-        }
-        /* nextTab */
-        const nextBtn = document.querySelectorAll(".btnNext");
-        const prevBtn = document.querySelectorAll(".btnPrevious");
-
-        nextBtn.forEach(function (item, index) {
-
-            item.addEventListener('click', function () {
-                let id1 = index;
-                let id2 = index + 1;
-                /*       let tabElement1 = document.querySelectorAll("#pills-tab2 li a")[id1]; */
-                let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2];
-                var lastTab = new bootstrap.Tab(tabElement2);
-                /*       tabElement1.classList.add('disabled'); */
-                lastTab.show();
-            });
-        });
-
-        prevBtn.forEach(function (item, index) {
-            item.addEventListener('click', function () {
-                let id = index;
-                let id2 = index - 1;
-                let tabElement = document.querySelectorAll("#pills-tab2 li a")[id];
-
-                /*       let tabElement2 = document.querySelectorAll("#pills-tab2 li a")[id2]; */
-                /*       tabElement?.classList?.remove('disabled'); */
-
-                var lastTab = new bootstrap.Tab(tabElement);
-                lastTab.show();
-            });
-        });
-
-        /* //check validatate */
-
-        var input1 = document.getElementById("inputName");
-        var input2 = document.getElementById("inputPhone");
-        var input3 = document.getElementById("inputEmail");
-
-        var error2 = document.getElementById("error2");
-        input1.onblur = function () {
-            if (input1.value.length == 0) {
-                input1.classList.add('invalid');
-                error1.innerHTML = 'Please enter a correct first name and last name.'
-            }
-        };
-
-        input1.onfocus = function () {
-            input1.classList.remove('invalid');
-            error1.innerHTML = "";
-        };
-
-        function validatePhoneNumber(input_str) {
-            var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-
-            return re.test(input_str);
-        }
-
-
-        input2.onblur = function () {
-            if (!validatePhoneNumber(input2.value)) {
-                input2.classList.add('invalid');
-                error2.innerHTML = 'Please enter a correct number phone.';
-                /* 				error2.innerText = 'Please enter a correct number phone.'; */
-                /* 				console.log(error2) */
-            }
-        };
-
-        input2.onfocus = function () {
-            if (this.classList.contains('invalid2')) {
-                this.classList.remove('invalid2');
-                error2.innerHTML = "";
-            }
-        };
-
-
-        input3.onblur = function () {
-            if (input3.value.length === 0) {
-                input3.classList.add('invalid');
-                error3.innerHTML = 'Please enter a correct email.'
-            }
-        };
-
-        input3.onfocus = function () {
-            if (this.classList.contains('invalid')) {
-                this.classList.remove('invalid');
-                error3.innerHTML = "";
-            }
-        };
-
-    </script>
+      </script>
 
 </body>
 

@@ -82,11 +82,10 @@ WSGI_APPLICATION = 'VeXeOnline.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vexeonline',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'default',
+        'USER': 'django',
+        'PASSWORD': '64846',
     }
 }
 
@@ -128,13 +127,13 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'voduytao3@gmail.com'
-EMAIL_HOST_PASSWORD = 'huujnitaugdvmoxv'
+EMAIL_HOST_PASSWORD = 'hcccxudvedynnwrr'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+APPEND_SLASH=False
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
