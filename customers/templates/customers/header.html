@@ -1,10 +1,8 @@
 {% load static %}
-
-
 <header class="container-fluid myNavBar">
     <nav class="navbar navbar-expand-md navbar-light">
       <div class="col-md-8 col-xl-7 col-lg-9 col-sm-6 d-flex">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src="{% static 'customers/images/logo1.png' %}" alt="">
         </a>
         <div class="Categories">
@@ -50,7 +48,7 @@
             </li>
             <li class="nav-item item4 ">
               <div class="d-flex">
-                <button type="button" class="btn  btn--white mr-2" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn  btn--white mr-2" data-toggle="modal" data-target="#madalLogin">
                   Login
                 </button>
               </div>
@@ -68,8 +66,8 @@
   </header>
   <!-- đăng nhập -->
   <section class="dangnhap">
-    	<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
+    	<div class="modal fade" id="madalLogin" tabindex="-1"
+			aria-labelledby="madalLogin" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-xl">
 				<div class="modal-content  login">
 					<div class="modal-bodys">
@@ -90,7 +88,6 @@
 								<div class="right">
 									<div class=""
 										style="display: flex; justify-content: flex-end; margin: -25px 15px 0 0; height: auto">
-
 										<a class="" href="/">
 											<button type="button"
 												class="btn btn-outline-danger btn-sm btn-close"
@@ -118,17 +115,19 @@
                   {% endblock messages %}
                     <div class="form-group">
                       <input
-                        type="text"
+                        type="tel"
                         class="form-control top"
-                        id="input"
+                        id="phoneNumber"
                         aria-describedby="phoneHelp"
                         placeholder="Phone number"
                         name="numberPhone"
                         value=""
+                        pattern="[0-9]{10}"
                         required
                       />
+                     
                       <div>
-                        <p id="error"></p>
+                        <p id="error2"></p>
                       </div>
                     </div>
                     
@@ -144,20 +143,17 @@
                         value=""
                       />
                       <div>
-                        <p id="error2"></p>
+                        <p id="error3"></p>
                       </div>
                     </div>
-  
-                    <div class="form-group form-check content">
-                      <a class="forgot" href="login" style="text-decoration: none"
-                        >Forgot password</a
-                      >
+                    <div class="form-group content">
+                      <button type="button" class="btn  btn--white " data-toggle="modal" data-target="#modalForgot">
+                        Forgot password
+                      </button>
                     </div>
                     <button class="button3" type="submit">Login</button>
                   </form>
-
-
-								</div>
+								</div> 
 							</div>
 						</div>
 					</div>
@@ -165,3 +161,103 @@
 			</div>
 		</div>
 	</section>
+
+  {% comment %} forgotPassword {% endcomment %}
+  <section class="forgotPassword">
+    <div class="modal fade" id="modalForgot" tabindex="-1"
+    aria-labelledby="modalForgot" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content  forgot">
+        <div class="modal-bodys">
+          <div class="container ">
+            <div class="log__content">
+              <div class="left" style="
+              margin-right: 35px;">
+                <div class="logo">
+                  <img src="{% static 'customers/images/logo1.png' %}" alt="">
+                </div>
+                <div class="log">
+                  <img alt="" src="{% static 'customers/images/buy_ticket_login.jpg' %}"
+                    style="width: 300px; height: 300px;">
+                </div>
+              </div>
+              <div class="right">
+                <div class=""
+                  style="display: flex; justify-content: flex-end; margin: -25px 15px 0 0; height: auto">
+                  <a class="" href="/">
+                    <button type="button"
+                      class="btn btn-outline-danger btn-sm btn-close"
+                      data-bs-dismiss="modal" aria-label="Close">X</button>
+                  </a>
+                </div>
+                <H2>Forgot password</H2>
+                <form action="/forgotPassword" method="POST">
+                  {% csrf_token %} 
+                  {% if messages %}
+                    <ul class="messagelist">
+                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+                    </ul>
+                  {% endif %}
+                  <div class="form-group">
+                    <input
+                      type="tel"
+                      class="form-control top"
+                      id="_phoneNumber"
+                      aria-describedby="phoneHelp"
+                      placeholder="Phone number"
+                      name="numberPhoneForgotPassword"
+                      value=""
+                      pattern="[0-9]{10}"
+                      required
+                    />
+                
+                     <p id="errorNumberPhone" style="
+                     display: flex;"
+                     ></p>
+                  </div>
+                  <div class="" style="
+                  display: flex;
+                  justify-content: space-between;">
+                    <button class="button3" style="
+                    margin: 0;
+                    margin-right: auto;
+                    width: 23%;
+                    margin-left: 0px;
+                "
+                type="submit">Submit</button>
+                  </div>
+                 
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  function validatePhoneNumber(input_str) {
+    var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+    return re.test(input_str);
+  }
+
+  var _phoneNumber = document.getElementById("_phoneNumber");
+  _phoneNumber.onblur = function () {
+    if (!validatePhoneNumber(_phoneNumber.value)) {
+      _phoneNumber.classList.add("invalid");
+      errorNumberPhone.innerHTML = "Please enter a correct number phone.";
+    }
+  };
+
+  _phoneNumber.onfocus = function () {
+    if (this.classList.contains("invalid")) {
+      this.classList.remove("invalid");
+      errorNumberPhone.innerHTML = "";
+    }
+  };
+
+  
+</script>

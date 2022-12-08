@@ -286,9 +286,8 @@ p {
     right: 0px;
 }
 .div>i{
-    font-size: 21px;
-    color: gray;
-    padding: 4px;
+    font-size: 18px;
+    padding: 6px;
 }
 
 .div__content{

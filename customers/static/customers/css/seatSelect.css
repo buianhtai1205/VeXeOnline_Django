@@ -1,0 +1,72 @@
+.hqRXwu {
+    width: 596px;
+    display: flex;
+    padding-bottom: 24px;
+}
+
+.hqRXwu .seat {
+    padding: 6px 0;
+}
+
+.hqRXwu .seat-groups {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    width: 100%;
+    padding-right: 16px;
+}
+
+.hqRXwu .seat-template {
+    width: 100%;
+}
+
+.llUipg {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.llUipg .coach {
+    padding: 24px 12px 12px;
+    background: rgb(242, 242, 242);
+    border-radius: 25px 25px 5px 5px;
+}
+
+.buebkj {
+    min-width: 22px;
+    min-height: 30px;
+    cursor: not-allowed;
+}
+
+.iaQDbI {
+    cursor: pointer;
+    min-width: 22px;
+    min-height: 30px;
+}
+
+.cUIhrn div svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
+
+.ArHJS {
+    min-width: 22px;
+    min-height: 30px;
+    cursor: not-allowed;
+}
+
+.ArHJS div svg rect {
+    stroke: rgb(242, 242, 242);
+    fill: rgb(224, 224, 224);
+    cursor: not-allowed;
+}
+
+.daMVvn svg rect {
+    stroke: rgb(242, 242, 242);
+    fill: rgb(224, 224, 224);
+}
+
+.dLgsTe svg rect {
+    stroke: rgb(39, 174, 96);
+    fill: rgb(139, 229, 176);
+}
